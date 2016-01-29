@@ -1,0 +1,173 @@
+fileFormatVersion: 2
+guid: 12e9c6215db0c421e8fbdaac345ef74f
+timeCreated: 1454107723
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: PSP - Astonishia Story - Buildings 1_0
+    21300002: PSP - Astonishia Story - Buildings 1_1
+    21300004: PSP - Astonishia Story - Buildings 1_2
+    21300006: PSP - Astonishia Story - Buildings 1_3
+    21300008: PSP - Astonishia Story - Buildings 1_4_chapel
+    21300010: PSP - Astonishia Story - Buildings 1_5_fuckhouse
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: PSP - Astonishia Story - Buildings 1_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 305
+        width: 151
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -12.5, y: 100}
+        - {x: -68.5, y: 53}
+        - {x: -75.5, y: 19}
+        - {x: -75.5, y: -100}
+        - {x: 68.5, y: -100}
+        - {x: 75.5, y: -98}
+        - {x: 75.5, y: 59}
+        - {x: 18.5, y: 100}
+    - name: PSP - Astonishia Story - Buildings 1_1
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 305
+        width: 220
+        height: 191
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 110, y: 56.5}
+        - {x: 59, y: 70.5}
+        - {x: 10, y: 90.5}
+        - {x: -16, y: 95.5}
+        - {x: -52, y: 95.5}
+        - {x: -88, y: 75.5}
+        - {x: -110, y: 39.5}
+        - {x: -110, y: -95.5}
+        - {x: 16, y: -95.5}
+        - {x: 89, y: -50.5}
+        - {x: 110, y: -48.5}
+    - name: PSP - Astonishia Story - Buildings 1_2
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 308
+        width: 160
+        height: 188
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 23, y: 94}
+        - {x: -25, y: 94}
+        - {x: -80, y: 52}
+        - {x: -80, y: -92}
+        - {x: -39, y: -94}
+        - {x: 55, y: -94}
+        - {x: 80, y: -89}
+        - {x: 80, y: 53}
+    - name: PSP - Astonishia Story - Buildings 1_3
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 436
+        width: 144
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -56, y: 32}
+        - {x: -72, y: 8}
+        - {x: -72, y: -32}
+        - {x: 72, y: -32}
+        - {x: 72, y: 32}
+    - name: PSP - Astonishia Story - Buildings 1_4_chapel
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 305
+        width: 150
+        height: 119
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -75, y: 59.5}
+        - {x: -75, y: -59.5}
+        - {x: 62, y: -59.5}
+        - {x: 75, y: -54.5}
+        - {x: 75, y: 55.5}
+        - {x: 72, y: 59.5}
+    - name: PSP - Astonishia Story - Buildings 1_5_fuckhouse
+      rect:
+        serializedVersion: 2
+        x: 328
+        y: 127
+        width: 107
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -53.5, y: 80}
+        - {x: -53.5, y: -41}
+        - {x: -44.5, y: -77}
+        - {x: -30.5, y: -80}
+        - {x: 53.5, y: -80}
+        - {x: 53.5, y: 80}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
