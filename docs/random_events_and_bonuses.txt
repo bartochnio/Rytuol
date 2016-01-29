@@ -1,0 +1,35 @@
+angry gods' events:
+
+	- fuckhouse produces different resource than humans
+	- you need to amass a specific procession in order to bring sun up above the horizon
+	- thunderbolts strike down random places:
+		- jungle:
+			- fruit trees when hit stop producing fruit
+			- goats and savages when hit just die
+		- village:
+			- any resource hit by a thunderbolt is destroyed
+			- when fuckhouse is hit, peons production stops for some time
+			- when chapel is hit, you cannot convert your savages into peons
+		- pyramids
+			- thunderbolt can kill a random offering piece in a procession
+	- massive rain makes all peons go slower
+	- massive winds break down trees in the jungle and can kill peons/savages/goats
+	- earthquake stops everyone in place for a while
+
+	ULTIMATE FUCKUP:
+	Spanish Conquista starts, the Spaniards ultimately kill everybody.
+
+bonus events:
+
+	- God of War:
+		- makes catching savages twice as fast
+		- human sacrifices to other gods are twice as powerful
+
+	- Goddess of Fertility
+		- makes fruit grow twice as fast
+		- fruit sacrifices to other gods are twice as powerful
+
+	- God of Sun
+		- makes catching goats twice as fast
+		- goat sacrifices to other gods are twice as powerful
+
