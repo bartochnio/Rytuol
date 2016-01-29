@@ -1,0 +1,29 @@
+features:
+
+area 1 (pyramids):
+
+- resource drain
+- resource needs messaging
+- launching random events
+- each pyramid has an offering bar filling up 
+	- each pyramid has a preferable offering type, but you can put all of them in here
+	
+
+
+-bonus: resource rewards (fruit growth speed up etc.)
+
+area 2 (queue-village): 
+
+- lining up resorces in 3 different queues 
+- spawning hunters/gatherers
+- sending resources to pyramids
+
+area 3 (gathering):
+
+- spawning resources:
+	- people running around to be hunted
+	- fruits growing on trees
+	- wild animals running around being hunted
+
+- hunters/gatherers going around and doing their job
+
