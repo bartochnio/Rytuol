@@ -147,4 +147,14 @@ public class Critter : MonoBehaviour, IMovable, IForestItem
         SpriteRenderer render = GetComponent<SpriteRenderer>();
         render.color = c;
     }
+
+	public bool IsSafeToKill {
+		get {
+			return !bSelected;
+		}
+	}
+
+	public void Kill() {
+		GameObject.Destroy (gameObject);
+	}
 }

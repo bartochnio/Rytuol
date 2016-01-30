@@ -15,6 +15,9 @@ public interface IForestItem {
 
 	void Select();
 	void Unselect();
+
+	bool IsSafeToKill { get; }
+	void Kill();
 }
 
 

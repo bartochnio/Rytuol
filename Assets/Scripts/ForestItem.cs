@@ -53,4 +53,14 @@ public class ForestItem : MonoBehaviour, IForestItem {
         SpriteRenderer render = GetComponentInChildren<SpriteRenderer>();
         render.color = c;
     }
+
+	public bool IsSafeToKill {
+		get {
+			return !bSelected;
+		}
+	}
+
+	public void Kill() {
+		GameObject.Destroy (gameObject);
+	}
 }
