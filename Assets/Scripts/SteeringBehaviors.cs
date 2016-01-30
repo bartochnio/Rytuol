@@ -16,11 +16,11 @@ public interface IMovable
 //path wrapper for useful functions
 public class WaypointPath
 {
-    public List<Vector2> mWaypoints;
+    public List<Waypoint> mWaypoints;
     
     private int mCurWaypointIdx = 0;
     public bool mLooped;
-    
+
     public void Reset()
     {
         if (mWaypoints != null)
@@ -32,7 +32,7 @@ public class WaypointPath
 
     public Vector3 GetCurrent()
     {
-        return (Vector3)mWaypoints[mCurWaypointIdx];
+        return (Vector3)mWaypoints[mCurWaypointIdx].pos;
     }
 
     public void SetNext()
@@ -51,6 +51,36 @@ public class WaypointPath
     public int GetSize()
     {
         return mWaypoints == null ? 0 : mWaypoints.Count;
+    }
+
+    public void Smooth(Vector2 start, Vector2 target)
+    {
+        int idx = mCurWaypointIdx;
+
+        if (mWaypoints.Count <= 3)
+            return;
+
+        Vector2 next = target;
+        for (int i = (mWaypoints.Count-2); i >= idx; --i)
+        {
+            Vector3 vertA = mWaypoints[i].e1;
+            Vector3 vertB = mWaypoints[i].e2;
+
+            Vector3 deltaBA = vertB - vertA;
+            Vector3 deltaNS = (Vector3)next - (Vector3)start;
+            Vector3 P = new Vector3(-deltaBA.z, deltaBA.y, deltaBA.x);
+
+            float h = (Vector2.Dot(vertA - (Vector3)start, P)) / Vector2.Dot(deltaNS, P);
+            Vector3 p;
+            if (h < 0.0f) p = vertA;
+            else if (h > 1.0f) p = vertB;
+            else p = (Vector3)start + deltaNS * h;
+
+            Vector3 res = Utils.projectPointToSegment(p, start, next);
+            Vector3 pathPoint = Utils.projectPointToSegment(res, vertA, vertB);
+            mWaypoints[i].pos = pathPoint;
+            next = pathPoint;
+        }
     }
 }
 
@@ -74,6 +104,7 @@ class SteeringBehaviors
     private WaypointPath mWaypointPath = new WaypointPath();
     private IMovable mOwner;
     private int mSteeringFlags = 0;
+    private Vector2 mTarget = Vector2.zero;
 
     public SteeringBehaviors(IMovable owner)
     {
@@ -93,11 +124,16 @@ class SteeringBehaviors
         return mWaypointPath.HasFinished() && Vector2.Distance(mWaypointPath.GetCurrent(),mOwner.position) < 0.1f;
     }
 
-    public void SetPath(List<Vector2> path, bool loop = false)
+    public void SetPath(List<Waypoint> path, bool loop = false)
     {
         mWaypointPath.Reset();
         mWaypointPath.mWaypoints = path;
         mWaypointPath.mLooped = loop;
+    }
+
+    public void SetTarget(Vector2 target)
+    {
+        mTarget = target;
     }
 
     private bool AppendForce(ref Vector3 total, Vector3 toAdd)
@@ -251,10 +287,13 @@ class SteeringBehaviors
     public Vector3 FollowPath()
     {
         float waypointDist = 0.5f;
-        float deceleration = 2.0f;
+        float deceleration = 0.5f;
 
         if (mWaypointPath.GetSize() == 0)
             return Vector3.zero;
+
+        //do smoothing here
+        mWaypointPath.Smooth(mOwner.position, mTarget);
 
         if (Vector3.SqrMagnitude(mOwner.position - mWaypointPath.GetCurrent()) < waypointDist * waypointDist)
         {
@@ -264,7 +303,7 @@ class SteeringBehaviors
         if (!mWaypointPath.HasFinished())
             return Seek(mWaypointPath.GetCurrent());
         else
-            return Seek(mWaypointPath.GetCurrent());//return Arrive(mWaypointPath.GetCurrent(), deceleration);
+            return Arrive(mWaypointPath.GetCurrent(), deceleration);
     }
 
     //group behaviors

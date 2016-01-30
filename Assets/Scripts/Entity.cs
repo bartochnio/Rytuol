@@ -29,7 +29,7 @@ public class Entity : MonoBehaviour, IMovable
         maxSpeed = 2.0f;
 
         mSteering = new SteeringBehaviors(this);
-        mSteering.SetPath(Path, Loop);
+        //mSteering.SetPath(Path, Loop);
         
         //INTERNAL
         mSteering.SetFlag(Behavior.separation);

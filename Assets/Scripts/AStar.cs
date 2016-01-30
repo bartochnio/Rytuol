@@ -3,6 +3,20 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 
+public class Waypoint
+{
+    public Vector2 e1;
+    public Vector2 e2;
+    public Vector2 pos;
+
+    public Waypoint(Vector2 a, Vector2 b, Vector2 p)
+    {
+        e1 = a;
+        e2 = b;
+        pos = p;
+    }
+}
+
 public class AStar : MonoBehaviour
 {
     private NavMesh2D navMesh;
@@ -15,6 +29,8 @@ public class AStar : MonoBehaviour
         public int NavNodeIdx;
         public Node parent;
         public Vector2 pos;
+        public Vector2 e1;
+        public Vector2 e2;
 
         public int CompareTo(Node other)
         {
@@ -57,9 +73,9 @@ public class AStar : MonoBehaviour
         //}
     }
 
-    public List<Vector2> FindPath(Vector2 pos, Vector2 target)
+    public List<Waypoint> FindPath(Vector2 pos, Vector2 target)
     {
-        List<Vector2> path = new List<Vector2>();
+        List<Waypoint> path = new List<Waypoint>();
         int startIdx = navMesh.FindContainingNode(pos);
         int endIdx = navMesh.FindContainingNode(target);
 
@@ -71,8 +87,8 @@ public class AStar : MonoBehaviour
 
         if (startIdx == endIdx)
         {
-            path.Add(pos);
-            path.Add(target);
+            path.Add(new Waypoint(Vector2.zero, Vector2.zero,pos));
+            path.Add(new Waypoint(Vector2.zero, Vector2.zero, target));
             return path;
         }
 
@@ -92,10 +108,11 @@ public class AStar : MonoBehaviour
         bool foundPath = false;
 
         //int count = 10;
+        Node node = startNode;
         while (openList.Count > 0 || !foundPath)
         {
             openList.Sort();
-            Node node = openList[0];
+            node = openList[0];
             openList.RemoveAt(0);
             closedList.Add(node);
 
@@ -104,43 +121,6 @@ public class AStar : MonoBehaviour
             if (node.NavNodeIdx == endIdx)
             {
                 foundPath = true;
-
-                path.Add(target);
-
-                Node n = node;
-                Vector3 pNext = target;
-                while(n.parent != null)
-                {
-                    NavMesh2D.Node nav = navMesh.GetNode(n.NavNodeIdx);
-
-                    if (n.parent != null)
-                    {
-                        int parentIdx = n.parent.NavNodeIdx;
-                        NavMesh2D.Edge edge = nav.GetEdge(parentIdx);
-
-                        Vector3 vertA = edge.e1;
-                        Vector3 vertB = edge.e2;
-
-                        Vector3 deltaBA = vertB - vertA;
-                        Vector3 deltaNS = pNext - (Vector3)pos;
-                        Vector3 P = new Vector3(-deltaBA.z, deltaBA.y, deltaBA.x);
-
-                        float h = (Vector2.Dot(vertA - (Vector3)pos,P)) / Vector2.Dot(deltaNS,P);
-                        Vector3 p;
-                        if (h < 0.0f) p = vertA;
-                        else if (h > 1.0f) p = vertB;
-                        else p = (Vector3)pos + deltaNS * h;
-
-                        Vector3 res = Utils.projectPointToSegment(p, pos, pNext);
-                        Vector3 pathPoint = Utils.projectPointToSegment(res, vertA, vertB);
-                        path.Add(pathPoint);
-                        pNext = pathPoint;
-                    }
-
-                    n = n.parent;
-                }
-
-                path.Add(pos);
                 break;
             }
 
@@ -169,6 +149,8 @@ public class AStar : MonoBehaviour
                     child.parent = node;
                     child.pos = childPos;
                     child.NavNodeIdx = idx;
+                    child.e1 = edge.e1;
+                    child.e2 = edge.e2;
                     openList.Add(child);
                 }
                 else
@@ -183,6 +165,30 @@ public class AStar : MonoBehaviour
                     }
                 }
             }
+        }
+
+        //construct path
+        if (foundPath)
+        {
+            //path.Add(target);
+
+            Node n = node;
+            n.pos = target;
+            Vector3 pNext = target;
+            while (n.parent != null)
+            {
+                NavMesh2D.Node nav = navMesh.GetNode(n.NavNodeIdx);
+
+                //if (n.parent != null)
+                //{
+
+                //}
+
+                path.Add(new Waypoint(n.e1,n.e2,n.pos));
+                n = n.parent;
+            }
+
+            //path.Add(pos);
         }
 
         path.Reverse();

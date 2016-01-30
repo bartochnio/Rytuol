@@ -18,7 +18,7 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 
     SteeringBehaviors mSteering;
     ArrayList mNeighbours = new ArrayList();
-    List<Vector2> mPath = new List<Vector2>();
+    List<Waypoint> mPath = new List<Waypoint>();
     Transform mTarget;
     int mQueueSlot = -1;
 
@@ -95,13 +95,14 @@ public class Peon : MonoBehaviour, IMovable, IPeon
                 break;
 
             case State.eIdle:
+                //mPath.Clear();
                 OnIdle();
                 break;
         }
 
         //for (int i = 0; i < mPath.Count - 1; ++i)
         //{
-        //    Debug.DrawLine(mPath[i], mPath[i + 1], Color.red);
+        //    Debug.DrawLine(mPath[i].pos, mPath[i + 1].pos, Color.red);
         //}
     }
 
@@ -296,6 +297,7 @@ public class Peon : MonoBehaviour, IMovable, IPeon
     public void MoveToPoint(Vector2 pos)
     {
         mSteering.SetFlag(Behavior.followPath);
+        mSteering.SetTarget(pos);
         mPath = AStar.GetInstance().FindPath(transform.position, pos);
         mSteering.SetPath(mPath);
     }

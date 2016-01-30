@@ -20,7 +20,7 @@ public class Critter : MonoBehaviour, IMovable, IForestItem
 
     SteeringBehaviors mSteering;
     ArrayList mNeighbours = new ArrayList();
-    List<Vector2> mPath = new List<Vector2>();
+    List<Waypoint> mPath = new List<Waypoint>();
 
     //IForestItem
 
@@ -81,6 +81,8 @@ public class Critter : MonoBehaviour, IMovable, IForestItem
 
         mSteering = new SteeringBehaviors(this);
         Vector2 target = Forest.GetGlobalInstance().AnyLocation;//NavMesh2D.GetInstance().GetRandomPos();
+        mSteering.SetTarget(target);
+
         mPath = AStar.GetInstance().FindPath(transform.position, target);
         mSteering.SetPath(mPath, false);
 
@@ -113,6 +115,7 @@ public class Critter : MonoBehaviour, IMovable, IForestItem
         if (mSteering.IsPathFinished())
         {
             Vector2 target = Forest.GetGlobalInstance().AnyLocation;
+            mSteering.SetTarget(target);
             mPath = AStar.GetInstance().FindPath(transform.position, target);
             mSteering.SetPath(mPath, false);
         }
