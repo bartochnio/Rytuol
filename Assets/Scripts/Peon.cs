@@ -336,13 +336,8 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 
 	public void Sacrifice (Temple temple, Vector3 templeLocation)
 	{
-<<<<<<< Updated upstream
 		targetTemple = temple;
-		actionState = State.eSacrificingItem;
-=======
-		targetTemple = templeId;
 		actionState = State.eOfferingItem;
->>>>>>> Stashed changes
 		MoveToPoint(templeLocation);
 	}
 
