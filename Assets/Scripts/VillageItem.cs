@@ -39,27 +39,14 @@ public class VillageItem : MonoBehaviour, IVillageItem {
 
         SetColor(Color.red);
 
-        int queueSlot = SacrificeQueue.GetInstance().Reserve();
+        int queueSlot = SacrificeQueue.GetInstance().ReserveSlot();
         if (queueSlot < 0)
         {
             Unselect();
             return;
         }
 
-        switch (itemType)
-        {
-            case VillageItemEnum.eSavage:
-                Village.GetGlobalInstance().OrderSacrificeSavage(this,queueSlot);
-                break;
-
-            case VillageItemEnum.eAnimal:
-                Village.GetGlobalInstance().OrderSacrificeAnimal(this, queueSlot);
-                break;
-
-            case VillageItemEnum.eFruit:
-                Village.GetGlobalInstance().OrderSacrificeAnimal(this, queueSlot);
-                break;
-        }
+		Village.GetGlobalInstance().OrderSacrificeItem(this,queueSlot);
     }
 
 	public void Unselect() {

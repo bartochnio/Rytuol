@@ -9,7 +9,7 @@ public class Village : MonoBehaviour, IVillage {
 	}
 
 
-    // public vars
+// public vars
     public GameObject savageResourcePrefab;
     public GameObject animalResourcePrefab;
     public GameObject fruitResourcePrefab;
@@ -29,8 +29,9 @@ public class Village : MonoBehaviour, IVillage {
 
 	List<IPeon> peons = new List<IPeon>();
 
-    // MonoBehaviour
-    //
+
+// MonoBehaviour
+//
     void Awake () {
 		Village.globalInstance = this;
 	}
@@ -42,7 +43,7 @@ public class Village : MonoBehaviour, IVillage {
 
 			if (peons.Count < 3) {
 				GameObject peonGO = GameObject.Instantiate (peonPrefab, spawnPoint.transform.position, Quaternion.identity) as GameObject;
-				peonGO.transform.parent = Village.GetGlobalInstance ().transform;
+				peonGO.transform.parent = spawnPoint.transform;//Village.GetGlobalInstance ().transform;
 
 				IPeon peonItem = peonGO.GetComponent<Peon> ();
 				if (peonItem != null)
@@ -53,6 +54,8 @@ public class Village : MonoBehaviour, IVillage {
 		}
 	}
 
+
+// public functions
     IPeon PopPeon()
     {
         if (peons.Count == 0)
@@ -64,6 +67,7 @@ public class Village : MonoBehaviour, IVillage {
 
         return p;
     }
+
 
 // IVillage
 //
@@ -89,25 +93,35 @@ public class Village : MonoBehaviour, IVillage {
     }
 
 
-    public void StoreSavage(Vector2 pos)
+	public void StoreItem(Vector2 pos, ForestItemEnum itmType)
     {
-        GameObject.Instantiate(savageResourcePrefab,pos,Quaternion.identity);
+		switch(itmType)
+		{
+		case ForestItemEnum.eSavage:
+			{
+				GameObject go = GameObject.Instantiate (savageResourcePrefab, pos, Quaternion.identity) as GameObject;
+				go.transform.parent = (SavagesArea as StorageArea).transform;
+			}
+			break;
+
+		case ForestItemEnum.eAnimal:
+			{
+				GameObject go = GameObject.Instantiate (animalResourcePrefab, pos, Quaternion.identity) as GameObject;
+				go.transform.parent = (AnimalsArea as StorageArea).transform;
+			}
+			break;
+
+		case ForestItemEnum.eFruit:
+			{
+				GameObject go = GameObject.Instantiate (fruitResourcePrefab, pos, Quaternion.identity) as GameObject;
+				go.transform.parent = (FruitsArea as StorageArea).transform;
+			}
+			break;
+		}
     }
 
-    public void StoreFruit(Vector2 pos)
-    {
-        GameObject.Instantiate(fruitResourcePrefab, pos, Quaternion.identity);
-    }
 
-    public void StoreAnimal(Vector2 pos)
-    {
-        GameObject.Instantiate(animalResourcePrefab, pos, Quaternion.identity);
-    }
-
-
-    // TODO: consider merging this 3 functions
-
-    public void OrderCaptureSavage(IForestItem item)
+	public void OrderCaptureItem(IForestItem item)
     {
         IPeon p = PopPeon();
 
@@ -117,27 +131,8 @@ public class Village : MonoBehaviour, IVillage {
             item.Unselect();
     }
 
-	public void OrderGatheringFruit(IForestItem item)
-    {
-        IPeon p = PopPeon();
 
-        if (p != null)
-            p.SeekForestItem(item);
-        else
-            item.Unselect();
-	}
-
-	public void OrderHuntAnimal(IForestItem item)
-    {
-        IPeon p = PopPeon();
-
-        if (p != null)
-            p.SeekForestItem(item);
-        else
-            item.Unselect();
-    }
-
-    public void OrderSacrificeSavage(IVillageItem item, int queueSlot)
+    public void OrderSacrificeItem(IVillageItem item, int queueSlot)
     {
         IPeon p = PopPeon();
 
@@ -146,33 +141,7 @@ public class Village : MonoBehaviour, IVillage {
         else
         {
             item.Unselect();
-            SacrificeQueue.GetInstance().Free(queueSlot);
-        }
-    }
-
-    public void OrderSacrificeFruit(IVillageItem item, int queueSlot)
-    {
-        IPeon p = PopPeon();
-
-        if (p != null)
-            p.SeekVillageItem(item, queueSlot);
-        else
-        {
-            item.Unselect();
-            SacrificeQueue.GetInstance().Free(queueSlot);
-        }
-    }
-
-    public void OrderSacrificeAnimal(IVillageItem item, int queueSlot)
-    {
-        IPeon p = PopPeon();
-
-        if (p != null)
-            p.SeekVillageItem(item, queueSlot);
-        else
-        {
-            item.Unselect();
-            SacrificeQueue.GetInstance().Free(queueSlot);
+            SacrificeQueue.GetInstance().FreeSlot(queueSlot);
         }
     }
 }

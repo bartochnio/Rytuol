@@ -3,16 +3,23 @@ using System.Collections.Generic;
 
 public class SacrificeQueue : MonoBehaviour
 {
+	private static SacrificeQueue instance = null;
+	public static SacrificeQueue GetInstance()
+	{
+		return instance;
+	}
+
+
     public int queueSize = 5;
     public Transform startingPos;
     public Vector2 offset;
 
-    int nextIdx = 0;
 
     int[] slots;
     IPeon[] peons;
 
-    private static SacrificeQueue instance = null;
+    
+
     void Awake()
     {
         SacrificeQueue.instance = this;
@@ -26,12 +33,9 @@ public class SacrificeQueue : MonoBehaviour
             slots[i] = 0;
     }
 
-    public static SacrificeQueue GetInstance()
-    {
-        return instance;
-    }
 
-    public int Reserve()
+
+    public int ReserveSlot()
     {
         for (int i = 0; i < queueSize; ++i)
         {
@@ -45,23 +49,33 @@ public class SacrificeQueue : MonoBehaviour
         return -1;
     }
 
-    void SendToTheTemple(Vector2 pos)
+	public void FreeSlot(int idx) //he he he
+	{
+		slots[idx] = 0;
+		peons [idx] = null;
+	}
+
+	public void ClaimSlot(IPeon p, int slotIdx)
+	{
+		peons[slotIdx] = p;
+	}
+
+
+	public void DispatchToTheTemple(Temple.ID templeId, Vector2 templePos)
     {
         for(int i = 0; i < queueSize; ++i)
         {
             if (peons[i] != null)
             {
-                //peons[i].Move
+				peons [i].Sacrifice (templeId, templePos);
+
+				FreeSlot (i);
             }
         }
     }
 
-    public void RegisterPeon(IPeon p, int slotIdx)
-    {
-        peons[slotIdx] = p;
-    }
 
-    public void Reset()
+	public void Reset()
     {
         for (int i = 0; i < queueSize; ++i)
         {
@@ -70,10 +84,6 @@ public class SacrificeQueue : MonoBehaviour
         }
     }
 
-    public void Free(int idx) //he he he
-    {
-        slots[idx] = 0;
-    }
 
     public Vector2 GetSlotPos(int idx)
     {

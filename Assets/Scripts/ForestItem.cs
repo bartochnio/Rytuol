@@ -38,11 +38,7 @@ public class ForestItem : MonoBehaviour, IForestItem {
 
         SetColor(Color.red);
 
-        switch (itemType) {
-		case ForestItemEnum.eFruit:
-			Village.GetGlobalInstance ().OrderGatheringFruit (this);
-			break;
-		}
+		Village.GetGlobalInstance ().OrderCaptureItem (this);
 	}
 
 	public void Unselect()
