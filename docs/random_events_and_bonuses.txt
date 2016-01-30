@@ -1,4 +1,5 @@
-angry gods' events:
+------------------------------------------
+[[ PLAGUES ]]
 
 	- fuckhouse produces different resource than humans
 	- you need to amass a specific procession in order to bring sun up above the horizon
@@ -15,21 +16,79 @@ angry gods' events:
 	- massive rain makes all peons go slower
 	- massive winds break down trees in the jungle and can kill peons/savages/goats
 	- earthquake stops everyone in place for a while
+	- The plague hits the goats. It's spread so player wants to kill the
+	  plagued as fast as he can. Yet he cannot sacrifice them anymore
 
 	ULTIMATE FUCKUP:
 	Spanish Conquista starts, the Spaniards ultimately kill everybody.
 
-bonus events:
+[SIGNS OF ANGRY GOD]
+	- God of War
+		- The enemies are armed ( if we implement the risk of hunt )
+		- Goats are armed :P
+		- Peons comming for savages are slower.
+
+	- Goddess of Fertility
+		- The grass gets more and more yellow
+		- Water ( if visiable ) gets dirty and muddy
+		- Trees are dying
+	- God of Sun
+		- Sun starts to be red or sick yellow greeninsh
+		- Rains starts ( a little bit of wather controll ) 
+
+------------------------------------------
+[[ BONUS EVENTS ]]
 
 	- God of War:
 		- makes catching savages twice as fast
 		- human sacrifices to other gods are twice as powerful
+		- Enemies are not trying to run away. They stop when player's
+		  peon is near
 
 	- Goddess of Fertility
 		- makes fruit grow twice as fast
 		- fruit sacrifices to other gods are twice as powerful
+		- The dead tree comes back to life
+		- Plenty of Goats
 
 	- God of Sun
 		- makes catching goats twice as fast
 		- goat sacrifices to other gods are twice as powerful
+		- goat just goes to the city
+		- Conversion is faster
 
+	[NOTE ABOUT THE BONUS]
+		It seems that those should follow the general rule that it
+does not boost directly the god which provides the calming sacrifice for him.
+So there is less chance to hold on the prosperity thanks to snowball effect
+		
+		On the other hand, the plagues should not hit the resource
+that will calm the god that casted it. It can lead to very unfair and quick
+loose.
+
+------------------------------------------
+[[ Score ]]
+	We can score player for few things.
+		- First and formost: The time that they managed to survive
+		  under the rules of gods
+		- Bonus for achievieng blessing
+
+------------------------------------------
+[[ SOME RANDOM NOTES ]]
+
+	[PRIESTS]
+	The procession can be lead by the priest that comes from the selected
+pyramid. It will take some time for him to get there so it will slow down a
+bit the pacing of sending sacrifices. Maybe there should be only two or one
+priest?
+
+	[MOVEMENT OF PRAY]
+	The savages and goats should stop from time to time, so they look much
+more natural;
+
+	[BUSHES]
+	Put some bushes that covers the moving goats and people. So they are
+harder to click.
+
+	[HUNTING THE PRAY]
+	It would be nice to have some net throwing animation.

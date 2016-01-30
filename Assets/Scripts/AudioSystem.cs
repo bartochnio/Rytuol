@@ -17,23 +17,23 @@ public class AudioSystem : MonoBehaviour {
     public AudioSource ambient;
     public AudioSource sfx;
     public AudioSource oneShots;
-
-    public bool wpierdolB; 
+    bool randomBeeee; 
+    public bool wpierdolB;
+    public AudioClip beeee;
+    public GameObject a; 
 
 	void Start () {
 
-
-        foreach (AudioSource a in GameObject.FindObjectsOfType<AudioSource>())
-            DontDestroyOnLoad(a);
-
+        DontDestroyOnLoad(a);
+        randomBeeee = true; 
         GameToMenu.TransitionTo(0f);
-
+        StartCoroutine("PlayRandomBeee");
 	}
 
     public void TransitionToGame()
     {
         GameToMenu.TransitionTo(0.5f);
-        
+        randomBeeee = false;
     }
 
 
@@ -48,6 +48,22 @@ public class AudioSystem : MonoBehaviour {
         if (!wpierdolB)
             MenuToGame.TransitionTo(1f);
     }
+
+    public IEnumerator PlayRandomBeee()
+    {
+        while (randomBeeee) { 
+            float beeecooldown = Random.RandomRange(6f, 10f);
+            yield return new WaitForSeconds(beeecooldown);
+            sfx.volume = Random.RandomRange(0.6f, 1f);
+            sfx.pitch = Random.RandomRange(0.65f, 1f);
+            sfx.PlayOneShot(beeee);
+
+        }
+
+    }
+
+ 
+
 
     void Update()
     {
