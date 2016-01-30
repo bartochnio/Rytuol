@@ -8,7 +8,8 @@ public class GoatScript : MonoBehaviour {
     public AudioClip[] goatDeath;
     public AudioClip blood; 
     public AudioSource sfx;
-    Animator anim; 
+    Animator anim;
+    public GameObject smoke; 
 
 	void Start () {
         sfx.volume = Random.RandomRange(0.8f, 1f);
@@ -33,11 +34,13 @@ public class GoatScript : MonoBehaviour {
         GetComponent<ParticleSystem>().enableEmission = true;
         yield return new WaitForSeconds(0.2f);
         sfx.PlayOneShot(goatDeath[Random.RandomRange(0, goatDeath.Length)]);
-
+ 
         while (sfx.isPlaying)
             yield return new WaitForEndOfFrame();
+        smoke.GetComponent<SpriteRenderer>().enabled = true;
+        smoke.GetComponent<Animator>().enabled = true;
         anim.Play("goat_death");
-        GetComponent<ParticleSystem>().enableEmission = false;
+        
     }
     public void DestroyMe() { 
         Destroy(this.gameObject);
