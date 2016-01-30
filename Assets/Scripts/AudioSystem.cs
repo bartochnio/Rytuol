@@ -20,12 +20,11 @@ public class AudioSystem : MonoBehaviour {
     bool randomBeeee; 
     public bool wpierdolB;
     public AudioClip beeee;
-    
+    public GameObject a; 
+
 	void Start () {
 
-
-        foreach (AudioSource a in GameObject.FindObjectsOfType<AudioSource>())
-            DontDestroyOnLoad(a);
+        DontDestroyOnLoad(a);
         randomBeeee = true; 
         GameToMenu.TransitionTo(0f);
         StartCoroutine("PlayRandomBeee");
