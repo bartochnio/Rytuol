@@ -40,19 +40,30 @@ public class Village : MonoBehaviour, IVillage {
 		if (spawnWaitTime > spawnDelay) {
 			spawnWaitTime = 0.0f;
 
-			if (peons.Count < 10) {
+			if (peons.Count < 3) {
 				GameObject peonGO = GameObject.Instantiate (peonPrefab, spawnPoint.transform.position, Quaternion.identity) as GameObject;
 				peonGO.transform.parent = Village.GetGlobalInstance ().transform;
 
-				Peon peonItem = peonGO.GetComponent<Peon> ();
-				if (peonItem != null) {
+				IPeon peonItem = peonGO.GetComponent<Peon> ();
+				if (peonItem != null)
+                {
 					peonItem.MoveToPeonsArea();
 				}
 			}
 		}
 	}
 
+    IPeon PopPeon()
+    {
+        if (peons.Count == 0)
+            return null;
 
+        int idx = peons.Count - 1;
+        IPeon p = peons[idx];
+        peons.RemoveAt(idx);
+
+        return p;
+    }
 
 // IVillage
 //
@@ -72,8 +83,13 @@ public class Village : MonoBehaviour, IVillage {
 		get { return (IStorageArea)animalsAreaGO.GetComponent<IStorageArea> (); }
 	}
 
+    public void RegisterPeon(IPeon peon)
+    {
+        peons.Add(peon);
+    }
 
-	public void RegisterVillageSavageSelection(IVillageItem item) {
+
+    public void RegisterVillageSavageSelection(IVillageItem item) {
 	}
 
 	public void RegisterVillageFruitSelection(IVillageItem item) {
@@ -83,12 +99,35 @@ public class Village : MonoBehaviour, IVillage {
 	}
 
 
-	public void RegisterForestSavageSelection(IForestItem item) {
+    // TODO: consider merging this 3 functions
+
+	public void OrderCaptureSavage(IForestItem item)
+    {
+        IPeon p = PopPeon();
+
+        if (p != null)
+            p.SeekForestItem(item);
+        else
+            item.Unselect();
+    }
+
+	public void OrderGatheringFruit(IForestItem item)
+    {
+        IPeon p = PopPeon();
+
+        if (p != null)
+            p.SeekForestItem(item);
+        else
+            item.Unselect();
 	}
 
-	public void RegisterForestFruitSelection(IForestItem item) {
-	}
+	public void OrderHuntAnimal(IForestItem item)
+    {
+        IPeon p = PopPeon();
 
-	public void RegisterForestAnimalSelection(IForestItem item) {
-	}
+        if (p != null)
+            p.SeekForestItem(item);
+        else
+            item.Unselect();
+    }
 }

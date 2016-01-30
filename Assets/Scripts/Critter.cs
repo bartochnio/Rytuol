@@ -28,9 +28,29 @@ public class Critter : MonoBehaviour, IMovable, IForestItem
     //
     void OnMouseDown()
     {
+        Debug.Log("EHAEHAEGAEa");
         Select();
     }
 
+    public void Select()
+    {
+        if (bSelected)
+            return;
+        bSelected = true;
+
+        SetColor(Color.red);
+
+        switch (itemType)
+        {
+            case ForestItemEnum.eSavage:
+                Village.GetGlobalInstance().OrderCaptureSavage(this);
+                break;
+
+            case ForestItemEnum.eAnimal:
+                Village.GetGlobalInstance().OrderHuntAnimal(this);
+                break;
+        }
+    }
 
     // IForestItem
     public ForestItemEnum ItemType
@@ -47,30 +67,9 @@ public class Critter : MonoBehaviour, IMovable, IForestItem
         }
     }
 
-    public void Select()
-    {
-        if (bSelected)
-            return;
-        bSelected = true;
-
-        switch (itemType)
-        {
-            case ForestItemEnum.eSavage:
-                Village.GetGlobalInstance().RegisterForestSavageSelection(this);
-                break;
-
-            case ForestItemEnum.eFruit:
-                Village.GetGlobalInstance().RegisterForestFruitSelection(this);
-                break;
-
-            case ForestItemEnum.eAnimal:
-                Village.GetGlobalInstance().RegisterForestAnimalSelection(this);
-                break;
-        }
-    }
-
     public void Unselect()
     {
+        SetColor(Color.white);
         bSelected = false;
         transform.rotation = Quaternion.identity;
     }
@@ -87,7 +86,7 @@ public class Critter : MonoBehaviour, IMovable, IForestItem
         mSteering.SetPath(mPath, false);
 
         //INTERNAL
-        mSteering.SetFlag(Behavior.separation);
+        //mSteering.SetFlag(Behavior.separation);
         //mSteering.SetFlag(Behavior.alignment);
         //mSteering.SetFlag(Behavior.cohesion);
         mSteering.SetFlag(Behavior.followPath);
@@ -143,5 +142,11 @@ public class Critter : MonoBehaviour, IMovable, IForestItem
         IMovable movable = other.GetComponent<IMovable>();
         if (movable != null)
             mNeighbours.Remove(movable);
+    }
+
+    void SetColor(Color c)
+    {
+        SpriteRenderer render = GetComponent<SpriteRenderer>();
+        render.color = c;
     }
 }

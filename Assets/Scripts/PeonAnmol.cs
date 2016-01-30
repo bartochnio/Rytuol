@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PeonAnmol : MonoBehaviour, IPeon {
+public class PeonAnmol : MonoBehaviour/*, IPeon*/ {
 
 // private vars
 	enum ActionState {

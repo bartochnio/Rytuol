@@ -187,7 +187,19 @@ public class NavMesh2D : MonoBehaviour
                 return i;
         }
 
-        return -1;
+        int idx = -1;
+        float closestDist = float.MaxValue;
+        for(int i = 0; i < nodes.Count; ++i)
+        {
+            float dist = Vector2.Distance(nodes[i].center, p);
+            if (dist <= closestDist )
+            {
+                idx = i;
+                closestDist = dist;
+            }
+        }
+
+        return idx;
     }
 
     int Next(int idx, int size)

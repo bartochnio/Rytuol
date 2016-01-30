@@ -35,6 +35,7 @@ public interface IVillageItem {
 
 public interface IPeon {
 	void MoveToPeonsArea();
+    void StoreForestItem(IForestItem item);
 	void SeekVillageItem(IVillageItem item);
 	void SeekForestItem(IForestItem item);
 }
@@ -54,12 +55,14 @@ public interface IVillage {
 	IStorageArea FruitsArea { get; }
 	IStorageArea AnimalsArea { get; }
 
+    void RegisterPeon(IPeon peon);
+
 	void RegisterVillageSavageSelection(IVillageItem item);
 	void RegisterVillageFruitSelection(IVillageItem item);
 	void RegisterVillageAnimalSelection(IVillageItem item);
 
-	void RegisterForestSavageSelection(IForestItem item);
-	void RegisterForestFruitSelection(IForestItem item);
-	void RegisterForestAnimalSelection(IForestItem item);
+	void OrderCaptureSavage(IForestItem item);
+	void OrderGatheringFruit(IForestItem item);
+	void OrderHuntAnimal(IForestItem item);
 }
 

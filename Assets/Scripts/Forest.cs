@@ -55,19 +55,6 @@ public class Forest : MonoBehaviour, IForest {
 				break;
 
 			case 1: {
-					if (fruits.Count < 10) {
-						GameObject GO = GameObject.Instantiate (fruitPrefab, AnyLocation, Quaternion.identity) as GameObject;
-						GO.transform.parent = Forest.GetGlobalInstance ().transform;
-
-						IForestItem item = (IForestItem)GO.GetComponent<ForestItem>();
-						if (item != null) {
-							fruits.Add (item);
-						}
-					}
-				}
-				break;
-
-			case 2: {
 					if (animals.Count < 10) {
 						GameObject GO = GameObject.Instantiate (animalPrefab, AnyLocation, Quaternion.identity) as GameObject;
 						GO.transform.parent = Forest.GetGlobalInstance ().transform;

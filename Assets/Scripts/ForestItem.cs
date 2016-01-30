@@ -12,9 +12,10 @@ public class ForestItem : MonoBehaviour, IForestItem {
 
 // MonoBehaviour
 //
-	void OnMouseDown() {
+	void OnMouseDown()
+    {
         Select();
-	}
+    }
 
 
 // IForestItem
@@ -29,28 +30,31 @@ public class ForestItem : MonoBehaviour, IForestItem {
 		}
 	}
 
-	public void Select() {
+	public void Select()
+    {
 		if (bSelected)
 			return;
 		bSelected = true;
 
-		switch (itemType) {
-		case ForestItemEnum.eSavage:
-			Village.GetGlobalInstance ().RegisterForestSavageSelection (this);
-			break;
+        SetColor(Color.red);
 
+        switch (itemType) {
 		case ForestItemEnum.eFruit:
-			Village.GetGlobalInstance ().RegisterForestFruitSelection (this);
-			break;
-
-		case ForestItemEnum.eAnimal:
-			Village.GetGlobalInstance ().RegisterForestAnimalSelection (this);
+			Village.GetGlobalInstance ().OrderGatheringFruit (this);
 			break;
 		}
 	}
 
-	public void Unselect() {
-		bSelected = false;
+	public void Unselect()
+    {
+        SetColor(Color.white);
+        bSelected = false;
 		transform.rotation = Quaternion.identity;
 	}
+
+    void SetColor(Color c)
+    {
+        SpriteRenderer render = GetComponentInChildren<SpriteRenderer>();
+        render.color = c;
+    }
 }

@@ -2,9 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Peon : MonoBehaviour, IMovable
+public class Peon : MonoBehaviour, IMovable, IPeon
 {
     public float MaxSpeed = 1.0f;
+
+    public Payload Payload;
 
     //IMovable
     public Vector3 velocity { get; set; }
@@ -17,6 +19,7 @@ public class Peon : MonoBehaviour, IMovable
     SteeringBehaviors mSteering;
     ArrayList mNeighbours = new ArrayList();
     List<Vector2> mPath = new List<Vector2>();
+    Transform mTarget;
 
     enum State
     {
@@ -48,7 +51,7 @@ public class Peon : MonoBehaviour, IMovable
         //MaxSpeed = 2.0f;
 
         mSteering = new SteeringBehaviors(this);
-        mSteering.SetFlag(Behavior.separation);
+        //mSteering.SetFlag(Behavior.separation);
     }
 
     // Use this for initialization
@@ -62,9 +65,19 @@ public class Peon : MonoBehaviour, IMovable
     {
         switch (actionState)
         {
-            case State.eGatheringFruit:
-            case State.eCapturingSavage:
             case State.eMovingToPeonsArea:
+            case State.eGatheringFruit:
+                OnMove();
+                break;
+
+            case State.eTamingAnimal:
+            case State.eCapturingSavage:        
+                OnPursue();
+                break;
+
+            case State.eStoringFruit:
+            case State.eStoringAnimal:
+            case State.eStoringSavage:
                 OnMove();
                 break;
 
@@ -78,9 +91,26 @@ public class Peon : MonoBehaviour, IMovable
 
     void OnMove()
     {
-        if (actionState == State.eMovingToPeonsArea && mSteering.IsPathFinished())
-            actionState = State.eIdle;
+        if(mSteering.IsPathFinished())
+        {
+            if (actionState == State.eMovingToPeonsArea)
+            {
+                actionState = State.eIdle;
+                Village.GetGlobalInstance().RegisterPeon(this);
+            }
+            else if (actionState == State.eStoringFruit || actionState == State.eStoringSavage || actionState == State.eStoringAnimal)
+            {
+                Payload.HidePayload();
+                MoveToPeonsArea();
+            }
+        }
 
+        Locomotion();
+    }
+
+    void OnPursue()
+    {
+        MoveToPoint(mTarget.position);
         Locomotion();
     }
 
@@ -95,6 +125,34 @@ public class Peon : MonoBehaviour, IMovable
         MoveToPoint(Village.GetGlobalInstance().PeonsArea.AnyLocation);
     }
 
+    public void StoreForestItem(IForestItem item)
+    {
+        switch (item.ItemType)
+        {
+            case ForestItemEnum.eFruit:
+                actionState = State.eStoringFruit;
+                MoveToPoint(Village.GetGlobalInstance().FruitsArea.AnyLocation);
+                Payload.ShowPayload(VillageItemEnum.eFruit);
+                break;
+
+            case ForestItemEnum.eAnimal:
+                actionState = State.eStoringAnimal;
+                MoveToPoint(Village.GetGlobalInstance().AnimalsArea.AnyLocation);
+                GameObject.Destroy((item as Critter).gameObject);
+                Payload.ShowPayload(VillageItemEnum.eAnimal);
+                break;
+
+            case ForestItemEnum.eSavage:
+                actionState = State.eStoringSavage;
+                MoveToPoint(Village.GetGlobalInstance().SavagesArea.AnyLocation);
+                GameObject.Destroy((item as Critter).gameObject);
+                Payload.ShowPayload(VillageItemEnum.eSavage);
+                break;
+        }
+
+        mTarget = null;
+    }
+
     public void SeekVillageItem(IVillageItem item)
     {
 
@@ -102,7 +160,24 @@ public class Peon : MonoBehaviour, IMovable
 
     public void SeekForestItem(IForestItem item)
     {
+        switch (item.ItemType)
+        {
+            case ForestItemEnum.eSavage:
+                mTarget = ((Critter)item).transform;
+                actionState = State.eCapturingSavage;
+                break;
 
+            case ForestItemEnum.eFruit:
+                mTarget = ((ForestItem)item).transform;
+                MoveToPoint(mTarget.position);
+                actionState = State.eGatheringFruit;
+                break;
+
+            case ForestItemEnum.eAnimal:
+                mTarget = ((Critter)item).transform;
+                actionState = State.eTamingAnimal;
+                break;
+        }
     }
 
     public void MoveToPoint(Vector2 pos)
@@ -130,6 +205,20 @@ public class Peon : MonoBehaviour, IMovable
         if (other.gameObject == gameObject)
         {
             return;
+        }
+
+        if (other.transform == mTarget)
+        {
+            var forestItem = mTarget.GetComponent<IForestItem>();
+            if (forestItem != null)
+            {
+                this.StoreForestItem(forestItem);
+                forestItem.Unselect();
+            } 
+            else
+            {
+                actionState = State.eIdle;
+            }
         }
 
         IMovable movable = other.GetComponent<IMovable>();
