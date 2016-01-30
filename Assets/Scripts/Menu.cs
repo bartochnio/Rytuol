@@ -38,7 +38,7 @@ public class Menu : MonoBehaviour {
 
     public void StartButton()
     {
-        Application.LoadLevel("Main");
+        Application.LoadLevel("VilageProto_v2");
     }
 
     public void YesTut()

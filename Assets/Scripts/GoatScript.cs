@@ -15,6 +15,13 @@ public class GoatScript : MonoBehaviour {
    public float cd = 1.5f;
    public float time; 
 
+    void Awake ()
+    {
+        if (sfx == null)
+            sfx = GameObject.Find("Audio/AudioSFX").GetComponent<AudioSource>();
+
+    }
+
     void Start () {
         sfx.volume = Random.RandomRange(0.8f, 1f);
         sfx.pitch = Random.RandomRange(0.75f, 1f);
@@ -26,7 +33,6 @@ public class GoatScript : MonoBehaviour {
 
     void OnMouseDown()
     {
-        Debug.Log("click");
         clicks++;
         time = 0f; 
         coolBool = true; 

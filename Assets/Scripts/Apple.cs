@@ -7,7 +7,11 @@ public class Apple : MonoBehaviour {
     public AudioSource sfx;
     public AudioClip pac;
 
-
+    void Awake()
+    {
+        if (sfx == null)
+            sfx = GameObject.Find("Audio/AudioSFX").GetComponent<AudioSource>();
+    }
 
 
     public void PlayPac()
