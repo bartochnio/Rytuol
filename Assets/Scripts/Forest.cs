@@ -16,7 +16,8 @@ public class Forest : MonoBehaviour, IForest {
 
 	public float spawnDelay = 1.0f;
 
-	public GameObject forestArea;
+	public GameObject forestArea;	
+	public GameObject itemsArea;
 
 
 
@@ -44,7 +45,7 @@ public class Forest : MonoBehaviour, IForest {
 			case 0: {
 					if (savages.Count < 10) {
 						GameObject GO = GameObject.Instantiate (savagePrefab, AnyLocation, Quaternion.identity) as GameObject;
-						GO.transform.parent = Forest.GetGlobalInstance ().transform;
+						GO.transform.parent = itemsArea.transform;//Forest.GetGlobalInstance ().transform;
 
 						IForestItem item = (IForestItem)GO.GetComponent<ForestItem>();
 						if (item != null) {
@@ -57,7 +58,7 @@ public class Forest : MonoBehaviour, IForest {
 			case 1: {
 					if (animals.Count < 10) {
 						GameObject GO = GameObject.Instantiate (animalPrefab, AnyLocation, Quaternion.identity) as GameObject;
-						GO.transform.parent = Forest.GetGlobalInstance ().transform;
+						GO.transform.parent = itemsArea.transform; //Forest.GetGlobalInstance ().transform;
 
 						IForestItem item = (IForestItem)GO.GetComponent<ForestItem>();
 						if (item != null) {

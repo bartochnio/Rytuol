@@ -43,7 +43,7 @@ public class Village : MonoBehaviour, IVillage {
 
 			if (peons.Count < 3) {
 				GameObject peonGO = GameObject.Instantiate (peonPrefab, spawnPoint.transform.position, Quaternion.identity) as GameObject;
-				peonGO.transform.parent = Village.GetGlobalInstance ().transform;
+				peonGO.transform.parent = spawnPoint.transform;//Village.GetGlobalInstance ().transform;
 
 				IPeon peonItem = peonGO.GetComponent<Peon> ();
 				if (peonItem != null)
@@ -98,15 +98,24 @@ public class Village : MonoBehaviour, IVillage {
 		switch(itmType)
 		{
 		case ForestItemEnum.eSavage:
-			GameObject.Instantiate (savageResourcePrefab, pos, Quaternion.identity);
+			{
+				GameObject go = GameObject.Instantiate (savageResourcePrefab, pos, Quaternion.identity) as GameObject;
+				go.transform.parent = (SavagesArea as StorageArea).transform;
+			}
 			break;
 
 		case ForestItemEnum.eAnimal:
-			GameObject.Instantiate (animalResourcePrefab, pos, Quaternion.identity);
+			{
+				GameObject go = GameObject.Instantiate (animalResourcePrefab, pos, Quaternion.identity) as GameObject;
+				go.transform.parent = (AnimalsArea as StorageArea).transform;
+			}
 			break;
 
 		case ForestItemEnum.eFruit:
-			GameObject.Instantiate (fruitResourcePrefab, pos, Quaternion.identity);
+			{
+				GameObject go = GameObject.Instantiate (fruitResourcePrefab, pos, Quaternion.identity) as GameObject;
+				go.transform.parent = (FruitsArea as StorageArea).transform;
+			}
 			break;
 		}
     }
