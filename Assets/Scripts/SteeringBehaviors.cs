@@ -16,7 +16,7 @@ public interface IMovable
 //path wrapper for useful functions
 public class WaypointPath
 {
-    public List<Vector3> mWaypoints;
+    public List<Vector2> mWaypoints;
     
     private int mCurWaypointIdx = 0;
     public bool mLooped;
@@ -88,7 +88,12 @@ class SteeringBehaviors
         mSteeringFlags |= (int)f;
     }
 
-    public void SetPath(List<Vector3> path, bool loop)
+    public bool IsPathFinished()
+    {
+        return mWaypointPath.HasFinished() && Vector2.Distance(mWaypointPath.GetCurrent(),mOwner.position) < 0.1f;
+    }
+
+    public void SetPath(List<Vector2> path, bool loop)
     {
         mWaypointPath.Reset();
         mWaypointPath.mWaypoints = path;
@@ -259,7 +264,7 @@ class SteeringBehaviors
         if (!mWaypointPath.HasFinished())
             return Seek(mWaypointPath.GetCurrent());
         else
-            return Arrive(mWaypointPath.GetCurrent(), deceleration);
+            return Seek(mWaypointPath.GetCurrent());//return Arrive(mWaypointPath.GetCurrent(), deceleration);
     }
 
     //group behaviors

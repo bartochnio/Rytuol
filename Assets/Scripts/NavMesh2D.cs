@@ -6,11 +6,9 @@ using System;
 [ExecuteInEditMode]
 public class NavMesh2D : MonoBehaviour 
 {
-
     public bool debugDrawOutline = false;
     public bool debugDrawPolys = false;
     public bool generateOnUpdate = false;
-    public bool drawEdges = true;
 
     private static List<Edge> edges = new List<Edge>();
     private static List<Node> nodes = new List<Node>();
@@ -138,6 +136,10 @@ public class NavMesh2D : MonoBehaviour
 
     void Awake()
     {
+        polygon = GetComponent<PolygonCollider2D>();
+        if (!generateOnUpdate)
+            Generate();
+
         NavMesh2D.instance = this;
     }
 
@@ -173,7 +175,7 @@ public class NavMesh2D : MonoBehaviour
 
     public Vector2 GetRandomPos()
     {
-        int idx = UnityEngine.Random.RandomRange(0, nodes.Count - 1);
+        int idx = UnityEngine.Random.Range(0, nodes.Count - 1);
         return nodes[idx].center;
     }
 

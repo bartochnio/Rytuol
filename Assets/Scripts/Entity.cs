@@ -17,7 +17,7 @@ public class Entity : MonoBehaviour, IMovable
     public bool Loop = false;
 
     [HideInInspector]
-    public List<Vector3> Path = new List<Vector3>(); 
+    public List<Vector2> Path = new List<Vector2>(); 
 
     //Private
     SteeringBehaviors mSteering;

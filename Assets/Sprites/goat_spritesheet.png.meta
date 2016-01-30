@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 30398159c88644249962e086a9c4c711
-timeCreated: 1454113549
+timeCreated: 1454123265
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -16,7 +16,7 @@ TextureImporter:
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -35,10 +35,10 @@ TextureImporter:
   cubemapConvolutionSteps: 7
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: -3
   maxTextureSize: 2048
   textureSettings:
-    filterMode: -1
+    filterMode: 0
     aniso: 16
     mipBias: -1
     wrapMode: 1
@@ -66,20 +66,20 @@ TextureImporter:
         y: 188
         width: 64
         height: 68
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.50000024, y: 0.037277896}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 8, y: 24}
-        - {x: -7, y: 24}
-        - {x: -16, y: 17}
-        - {x: -16, y: -1}
-        - {x: -14, y: -20}
-        - {x: -8, y: -30}
-        - {x: -1, y: -30}
-        - {x: 8, y: -26}
-        - {x: 16, y: -21}
-        - {x: 16, y: 18}
+      - - {x: 7.9999847, y: 55.465103}
+        - {x: -7.0000153, y: 55.465103}
+        - {x: -16.000015, y: 48.465103}
+        - {x: -16.000015, y: 30.465103}
+        - {x: -14.000015, y: 11.465103}
+        - {x: -8.000015, y: 1.4651031}
+        - {x: -1.0000153, y: 1.4651031}
+        - {x: 7.9999847, y: 5.465103}
+        - {x: 15.999985, y: 10.465103}
+        - {x: 15.999985, y: 49.465103}
     - name: goat_spritesheet_1
       rect:
         serializedVersion: 2
@@ -88,7 +88,7 @@ TextureImporter:
         width: 64
         height: 68
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: 15, y: 24}
@@ -107,7 +107,7 @@ TextureImporter:
         width: 64
         height: 68
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: 11, y: 22}
@@ -122,21 +122,21 @@ TextureImporter:
     - name: goat_spritesheet_3
       rect:
         serializedVersion: 2
-        x: 0
+        x: 1
         y: 120
         width: 64
         height: 68
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.46066934, y: 0.18534851}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -3, y: 22}
-        - {x: -22, y: 9}
-        - {x: -22, y: -26}
-        - {x: 14, y: -26}
-        - {x: 26, y: -15}
-        - {x: 26, y: 11}
-        - {x: 10, y: 22}
+      - - {x: -1.4828377, y: 43.3963}
+        - {x: -20.482838, y: 30.396301}
+        - {x: -20.482838, y: -4.6036987}
+        - {x: 15.517162, y: -4.6036987}
+        - {x: 27.517162, y: 6.3963013}
+        - {x: 27.517162, y: 32.3963}
+        - {x: 11.517162, y: 43.3963}
     - name: goat_spritesheet_4
       rect:
         serializedVersion: 2
@@ -144,18 +144,18 @@ TextureImporter:
         y: 120
         width: 64
         height: 68
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.42133772, y: 0.1668396}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -10, y: 24}
-        - {x: -26, y: 15}
-        - {x: -26, y: -11}
-        - {x: -21, y: -26}
-        - {x: 17, y: -26}
-        - {x: 24, y: -8}
-        - {x: 24, y: 17}
-        - {x: 12, y: 24}
+      - - {x: -4.9656143, y: 46.654907}
+        - {x: -20.965614, y: 37.654907}
+        - {x: -20.965614, y: 11.654907}
+        - {x: -15.965614, y: -3.3450928}
+        - {x: 22.034386, y: -3.3450928}
+        - {x: 29.034386, y: 14.654907}
+        - {x: 29.034386, y: 39.654907}
+        - {x: 17.034386, y: 46.654907}
     - name: goat_spritesheet_5
       rect:
         serializedVersion: 2
@@ -163,19 +163,19 @@ TextureImporter:
         y: 120
         width: 64
         height: 68
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.46066856, y: 0.129822}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 16, y: 22}
-        - {x: -15, y: 22}
-        - {x: -24, y: 17}
-        - {x: -24, y: -23}
-        - {x: -22, y: -26}
-        - {x: 16, y: -26}
-        - {x: 22, y: -18}
-        - {x: 22, y: 9}
-        - {x: 17, y: 21}
+      - - {x: 18.517212, y: 47.172104}
+        - {x: -12.482788, y: 47.172104}
+        - {x: -21.482788, y: 42.172104}
+        - {x: -21.482788, y: 2.172104}
+        - {x: -19.482788, y: -0.8278961}
+        - {x: 18.517212, y: -0.8278961}
+        - {x: 24.517212, y: 7.172104}
+        - {x: 24.517212, y: 34.172104}
+        - {x: 19.517212, y: 46.172104}
     - name: goat_spritesheet_6
       rect:
         serializedVersion: 2
@@ -184,7 +184,7 @@ TextureImporter:
         width: 64
         height: 68
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: 12, y: 28}
@@ -204,7 +204,7 @@ TextureImporter:
         width: 64
         height: 68
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: 3, y: -22}
@@ -228,7 +228,7 @@ TextureImporter:
         width: 64
         height: 68
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -4, y: 26}

@@ -24,13 +24,14 @@ public class Critter : MonoBehaviour, IMovable
         maxSpeed = 2.0f;
 
         mSteering = new SteeringBehaviors(this);
-        //NavMesh2D.GetInstance()->
-        //mSteering.SetPath(Path, Loop);
+        Vector2 target = NavMesh2D.GetInstance().GetRandomPos();
+        mPath = AStar.GetInstance().FindPath(transform.position, target);
+        mSteering.SetPath(mPath, false);
 
         //INTERNAL
-        //mSteering.SetFlag(Behavior.separation);
+        mSteering.SetFlag(Behavior.separation);
         //mSteering.SetFlag(Behavior.alignment);
-        mSteering.SetFlag(Behavior.cohesion);
+        //mSteering.SetFlag(Behavior.cohesion);
         mSteering.SetFlag(Behavior.followPath);
         //mSteering.SetFlag(Behavior.wander2d);
     }
@@ -52,6 +53,18 @@ public class Critter : MonoBehaviour, IMovable
         //heading
         //if (velocity.sqrMagnitude > 0.01f)
         //    transform.right = velocity.normalized;
+
+        if (mSteering.IsPathFinished())
+        {
+            Vector2 target = NavMesh2D.GetInstance().GetRandomPos();
+            mPath = AStar.GetInstance().FindPath(transform.position, target);
+            mSteering.SetPath(mPath, false);
+        }
+
+        //for(int i = 0; i < mPath.Count-1; ++i)
+        //{
+        //    Debug.DrawLine(mPath[i], mPath[i + 1], Color.red);
+        //}
     }
 
     void OnTriggerEnter2D(Collider2D other)
