@@ -31,9 +31,15 @@ public class GoatScript : MonoBehaviour {
         Debug.Log("DIE!");
         sfx.PlayOneShot(blood);
         GetComponent<ParticleSystem>().enableEmission = true;
-        yield return new WaitForSeconds (0.5f);
-        anim.Play("goat_death");
+        yield return new WaitForSeconds(0.2f);
         sfx.PlayOneShot(goatDeath[Random.RandomRange(0, goatDeath.Length)]);
+        while (sfx.isPlaying)
+            yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(0.2f);
+        anim.Play("goat_death");
+        GetComponent<ParticleSystem>().enableEmission = false;
+    }
+    public void DestroyMe() { 
         Destroy(this.gameObject);
     }
 
