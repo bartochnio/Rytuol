@@ -11,12 +11,15 @@ public class Menu : MonoBehaviour {
    public  int currentTut;
     public Text[] texts;
     public Image[] alphas;
+    public AudioSource sfx;
+    public AudioClip click;
+
 
     void Start()
     {
-        Camera c = GameObject.FindObjectOfType<Camera>();
+     //   Camera c = GameObject.FindObjectOfType<Camera>();
         tutorial.enabled = false; 
-        DontDestroyOnLoad(c);
+     //   DontDestroyOnLoad(c);
         HideTutorials();
         ShowTutorial();
     }
@@ -39,17 +42,20 @@ public class Menu : MonoBehaviour {
     public void StartButton()
     {
         Application.LoadLevel("VilageProto_v2");
+        sfx.PlayOneShot(click);
     }
 
     public void YesTut()
     {
         tutorial.enabled = true;
         main.enabled = false;
+        sfx.PlayOneShot(click);
     }
 
     public void NoTut()
     {
         tutorialStartup.SetActive(false);
+        sfx.PlayOneShot(click);
     }
 
     public void Quit()
@@ -60,6 +66,7 @@ public class Menu : MonoBehaviour {
     public void NextTutorial()
     {
         currentTut++;
+        sfx.PlayOneShot(click);
         if (currentTut >= texts.Length )
             currentTut = 0;
         HideTutorials();
@@ -69,6 +76,7 @@ public class Menu : MonoBehaviour {
     public void PreviousTutorial()
     {
         currentTut--;
+        sfx.PlayOneShot(click);
         if (currentTut < 0)
             currentTut = texts.Length -1;
         HideTutorials();
@@ -77,6 +85,7 @@ public class Menu : MonoBehaviour {
 
     public void QuitTutorial()
     {
+        sfx.PlayOneShot(click);
         tutorialStartup.SetActive(false);
         tutorial.enabled = false;
         main.enabled = true;
