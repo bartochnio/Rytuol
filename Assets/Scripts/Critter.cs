@@ -6,6 +6,8 @@ public class Critter : MonoBehaviour, IMovable, IForestItem
 {
     public float MaxSpeed;
     public ForestItemEnum itemType;
+    public AudioSource sfx;
+    public AudioClip click;
 
     // private vars
     bool bSelected;
@@ -26,6 +28,8 @@ public class Critter : MonoBehaviour, IMovable, IForestItem
 
     // MonoBehaviour
     //
+  
+
     void OnMouseDown()
     {
         Select();
@@ -38,8 +42,8 @@ public class Critter : MonoBehaviour, IMovable, IForestItem
         bSelected = true;
 
         SetColor(Color.red);
-
-		Village.GetGlobalInstance().OrderCaptureItem(this);
+        sfx.PlayOneShot(sfx.clip);
+        Village.GetGlobalInstance().OrderCaptureItem(this);
     }
 
     // IForestItem
@@ -76,7 +80,8 @@ public class Critter : MonoBehaviour, IMovable, IForestItem
 
         mPath = AStar.GetInstance().FindPath(transform.position, target);
         mSteering.SetPath(mPath, false);
-
+        if (sfx == null)
+            sfx = GameObject.Find("Audio/AudioSFX").GetComponent<AudioSource>();
         //INTERNAL
         //mSteering.SetFlag(Behavior.separation);
         //mSteering.SetFlag(Behavior.alignment);

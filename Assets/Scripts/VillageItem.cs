@@ -4,7 +4,7 @@ using System.Collections;
 public class VillageItem : MonoBehaviour, IVillageItem {
 // public vars
 	public VillageItemEnum itemType;
-
+  
 
 // private vars
 	bool bSelected = false;
@@ -17,6 +17,8 @@ public class VillageItem : MonoBehaviour, IVillageItem {
 		//	transform.Rotate (Vector3.up, 360.0f * Time.deltaTime);
 		//}
 	}
+
+  
 
 	void OnMouseDown() {
 		Select ();
@@ -31,8 +33,8 @@ public class VillageItem : MonoBehaviour, IVillageItem {
 	}
 
 	public void Select() {
-        
 
+        
         if (bSelected)
 			return;
 		bSelected = true;
