@@ -42,9 +42,9 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 
         eRetrievingItem,
 
-        eOfferingItem,
+        eQueueingItem,
 
-		eSacrificingItem
+		eOfferingItem
     }
     State actionState = State.eIdle;
 
@@ -94,12 +94,12 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 	            OnRetrieving();
 	        break;
 
-			case State.eOfferingItem:
-				OnOffering ();
+			case State.eQueueingItem:
+				OnQueueing ();
 			break;
 
-			case State.eSacrificingItem:
-				OnSacrificing();
+			case State.eOfferingItem:
+				OnOffering();
 			break;
 		}
 
@@ -159,7 +159,7 @@ public class Peon : MonoBehaviour, IMovable, IPeon
         Locomotion();
     }
 
-    void OnOffering()
+	void OnQueueing()
     {
         if (mSteering.IsPathFinished())
         {
@@ -170,7 +170,7 @@ public class Peon : MonoBehaviour, IMovable, IPeon
         Locomotion();
     }
 
-	void OnSacrificing()
+	void OnOffering()
 	{
 		if (mSteering.IsPathFinished())
 		{
@@ -231,7 +231,7 @@ public class Peon : MonoBehaviour, IMovable, IPeon
             }
         }
 
-		if (actionState == State.eSacrificingItem)
+		if (actionState == State.eOfferingItem)
 		{
 			Temple collidingTemple = other.GetComponent<Temple> ();
 
@@ -294,7 +294,7 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 	public void RetrieveVillageItem(IVillageItem item)
 	{
 		payLoadVillageItem = item.ItemType;
-		actionState = State.eOfferingItem;
+		actionState = State.eQueueingItem;
 		Payload.ShowPayload(item.ItemType);
 
 		MoveToPoint(SacrificeQueue.GetInstance().GetSlotPos(mQueueSlot));
@@ -337,11 +337,24 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 	public void Sacrifice (Temple temple, Vector3 templeLocation)
 	{
 		targetTemple = temple;
-		actionState = State.eSacrificingItem;
+		actionState = State.eOfferingItem;
 		MoveToPoint(templeLocation);
 	}
 
 	public VillageItemEnum ItemToSacrifice {
 		get { return payLoadVillageItem; }
+	}
+
+	public bool IsSafeToKill {
+		get {
+			return (actionState == State.eMovingToPeonsArea)
+				|| (actionState == State.eStoringItem)
+				|| (actionState == State.eQueueingItem)
+				|| (actionState == State.eOfferingItem);
+		}
+	}
+
+	public void Kill() {
+		GameObject.Destroy (gameObject);
 	}
 }

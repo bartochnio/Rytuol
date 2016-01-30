@@ -144,4 +144,8 @@ public class Village : MonoBehaviour, IVillage {
             SacrificeQueue.GetInstance().FreeSlot(queueSlot);
         }
     }
+
+	public bool IsPeonRegistered(IPeon peon) {
+		return (peons.Find (x => x == peon) != null);
+	}
 }

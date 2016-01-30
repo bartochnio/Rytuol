@@ -12,6 +12,9 @@ public interface IVillageItem {
 
 	void Select();
 	void Unselect();
+
+	bool IsSafeToKill { get; }
+	void Kill();
 }
 
 public interface IPeon {
@@ -26,6 +29,9 @@ public interface IPeon {
 	void Sacrifice (Temple temple, Vector3 templeLocation);
 
 	VillageItemEnum ItemToSacrifice { get; }
+
+	bool IsSafeToKill { get; }
+	void Kill();
 }
 
 public interface IStorageArea {
@@ -44,6 +50,7 @@ public interface IVillage {
 	IStorageArea AnimalsArea { get; }
 
     void RegisterPeon(IPeon peon);
+	bool IsPeonRegistered (IPeon peon);
 
 	void StoreItem(Vector2 pos, ForestItemEnum itmType);
 
