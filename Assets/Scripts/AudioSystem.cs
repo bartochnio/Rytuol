@@ -4,12 +4,16 @@ using UnityEngine.Audio;
 
 public class AudioSystem : MonoBehaviour {
 
-    public AudioClip[] drumz;
-    public AudioClip[] ambient;
+    public AudioClip[] drumzC;
+    public AudioClip[] ambientC;
 
     public AudioMixerSnapshot MenuToGame;
     public AudioMixerSnapshot GameToMenu;
 
+    public AudioSource audioMiG;
+    public AudioSource audioM;
+    public AudioSource ambient;
+    public AudioSource sfx; 
 
 	void Start () {
 
@@ -24,7 +28,12 @@ public class AudioSystem : MonoBehaviour {
     public void TransitionToGame()
     {
         MenuToGame.TransitionTo(0.5f);
+        
     }
 
-	
+    void Update()
+    {
+        if (!audioMiG.isPlaying)
+            ambient.PlayOneShot(ambientC[1]);
+    }
 }
