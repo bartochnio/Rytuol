@@ -2,9 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Critter : MonoBehaviour, IMovable
+public class Critter : MonoBehaviour, IMovable, IForestItem
 {
     public float MaxSpeed;
+    public ForestItemEnum itemType;
+
+    // private vars
+    bool bSelected;
 
     //IMovable
     public Vector3 velocity { get; set; }
@@ -18,6 +22,58 @@ public class Critter : MonoBehaviour, IMovable
     ArrayList mNeighbours = new ArrayList();
     List<Vector2> mPath = new List<Vector2>();
 
+    //IForestItem
+
+    // MonoBehaviour
+    //
+    void OnMouseDown()
+    {
+        Select();
+    }
+
+
+    // IForestItem
+    public ForestItemEnum ItemType
+    {
+        get { return itemType; }
+    }
+
+    public Vector3 Location
+    {
+        get
+        {
+            Vector3 pos = transform.position;
+            return new Vector3(pos.x, 0.0f, pos.z);
+        }
+    }
+
+    public void Select()
+    {
+        if (bSelected)
+            return;
+        bSelected = true;
+
+        switch (itemType)
+        {
+            case ForestItemEnum.eSavage:
+                Village.GetGlobalInstance().RegisterForestSavageSelection(this);
+                break;
+
+            case ForestItemEnum.eFruit:
+                Village.GetGlobalInstance().RegisterForestFruitSelection(this);
+                break;
+
+            case ForestItemEnum.eAnimal:
+                Village.GetGlobalInstance().RegisterForestAnimalSelection(this);
+                break;
+        }
+    }
+
+    public void Unselect()
+    {
+        bSelected = false;
+        transform.rotation = Quaternion.identity;
+    }
 
     // Use this for initialization
     void Start ()
@@ -26,7 +82,7 @@ public class Critter : MonoBehaviour, IMovable
         //MaxSpeed = 2.0f;
 
         mSteering = new SteeringBehaviors(this);
-        Vector2 target = NavMesh2D.GetInstance().GetRandomPos();
+        Vector2 target = Forest.GetGlobalInstance().AnyLocation;//NavMesh2D.GetInstance().GetRandomPos();
         mPath = AStar.GetInstance().FindPath(transform.position, target);
         mSteering.SetPath(mPath, false);
 
@@ -58,7 +114,7 @@ public class Critter : MonoBehaviour, IMovable
 
         if (mSteering.IsPathFinished())
         {
-            Vector2 target = NavMesh2D.GetInstance().GetRandomPos();
+            Vector2 target = Forest.GetGlobalInstance().AnyLocation;
             mPath = AStar.GetInstance().FindPath(transform.position, target);
             mSteering.SetPath(mPath, false);
         }

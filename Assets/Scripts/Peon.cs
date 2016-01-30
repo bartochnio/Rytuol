@@ -18,16 +18,31 @@ public class Peon : MonoBehaviour, IMovable
     ArrayList mNeighbours = new ArrayList();
     List<Vector2> mPath = new List<Vector2>();
 
-    enum STATE
+    enum State
     {
-        IDLE,
-        MOVE
-    };
+        eIdle,
 
-    STATE mState;
+        eMovingToPeonsArea,
 
-    // Use this for initialization
-    void Start ()
+        eCapturingSavage,
+        eGatheringFruit,
+        eTamingAnimal,
+
+        eStoringSavage,
+        eStoringFruit,
+        eStoringAnimal,
+
+        eRetrievingSavage,
+        eRetrievingFruit,
+        eRetrievingAnimal,
+
+        eOfferingSavage,
+        eOfferingFruit,
+        eOfferingAnimal
+    }
+    State actionState = State.eIdle;
+
+    void Awake()
     {
         velocity = Vector3.right;
         //MaxSpeed = 2.0f;
@@ -35,27 +50,38 @@ public class Peon : MonoBehaviour, IMovable
         mSteering = new SteeringBehaviors(this);
         mSteering.SetFlag(Behavior.separation);
     }
+
+    // Use this for initialization
+    void Start ()
+    {
+
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        switch (mState)
+        switch (actionState)
         {
-            case STATE.MOVE:
+            case State.eGatheringFruit:
+            case State.eCapturingSavage:
+            case State.eMovingToPeonsArea:
                 OnMove();
                 break;
 
-            case STATE.IDLE:
+            case State.eIdle:
                 OnIdle();
                 break;
         }
 
-        Locomotion();
+        
     }
 
     void OnMove()
     {
+        if (actionState == State.eMovingToPeonsArea && mSteering.IsPathFinished())
+            actionState = State.eIdle;
 
+        Locomotion();
     }
 
     void OnIdle()
@@ -63,9 +89,24 @@ public class Peon : MonoBehaviour, IMovable
 
     }
 
+    public void MoveToPeonsArea()
+    {
+        actionState = State.eMovingToPeonsArea;
+        MoveToPoint(Village.GetGlobalInstance().PeonsArea.AnyLocation);
+    }
+
+    public void SeekVillageItem(IVillageItem item)
+    {
+
+    }
+
+    public void SeekForestItem(IForestItem item)
+    {
+
+    }
+
     public void MoveToPoint(Vector2 pos)
     {
-        mState = STATE.MOVE;
         mSteering.SetFlag(Behavior.followPath);
         mPath = AStar.GetInstance().FindPath(transform.position, pos);
         mSteering.SetPath(mPath);

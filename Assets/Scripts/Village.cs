@@ -44,9 +44,9 @@ public class Village : MonoBehaviour, IVillage {
 				GameObject peonGO = GameObject.Instantiate (peonPrefab, spawnPoint.transform.position, Quaternion.identity) as GameObject;
 				peonGO.transform.parent = Village.GetGlobalInstance ().transform;
 
-				IPeon peonItem = (IPeon)peonGO.GetComponent<PeonAnmol> ();
+				Peon peonItem = peonGO.GetComponent<Peon> ();
 				if (peonItem != null) {
-					peonItem.MoveToPeonsArea ();
+					peonItem.MoveToPeonsArea();
 				}
 			}
 		}
