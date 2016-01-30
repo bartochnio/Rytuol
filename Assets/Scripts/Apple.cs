@@ -7,7 +7,7 @@ public class Apple : MonoBehaviour {
     public AudioSource sfx;
     public AudioClip pac;
 
-    void Awake()
+    void Start()
     {
         if (sfx == null)
             sfx = GameObject.Find("Audio/AudioSFX").GetComponent<AudioSource>();
@@ -16,6 +16,8 @@ public class Apple : MonoBehaviour {
 
     public void PlayPac()
     {
+        if (sfx == null)
+            sfx = GameObject.Find("Audio/AudioSFX").GetComponent<AudioSource>();
         sfx.PlayOneShot(pac);
     }
 
