@@ -27,8 +27,7 @@ public class Peon : MonoBehaviour, IMovable, IPeon
     int mQueueSlot = -1;
 	ForestItemEnum payLoadForestItem;
 	VillageItemEnum payLoadVillageItem;
-	Temple.ID targetTemple;
-
+	Temple targetTemple;
 
     enum State
     {
@@ -182,6 +181,7 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 	}
 
 	void FinishSacrifice() {
+        targetTemple.ReciveSacrifice(ItemToSacrifice);
 		Payload.HidePayload();
 		MoveToPeonsArea();
 	}
@@ -235,7 +235,7 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 		{
 			Temple collidingTemple = other.GetComponent<Temple> ();
 
-			if (collidingTemple != null && targetTemple == collidingTemple.templeId)
+			if (collidingTemple != null && targetTemple == collidingTemple)
 			{
 				FinishSacrifice ();
 			}
@@ -334,9 +334,9 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 		}
 	}
 
-	public void Sacrifice (Temple.ID templeId, Vector3 templeLocation)
+	public void Sacrifice (Temple temple, Vector3 templeLocation)
 	{
-		targetTemple = templeId;
+		targetTemple = temple;
 		actionState = State.eSacrificingItem;
 		MoveToPoint(templeLocation);
 	}

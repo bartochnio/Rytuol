@@ -23,7 +23,7 @@ public interface IPeon {
 	void SeekVillageItem(IVillageItem item, int queueSlot);
 	void RetrieveVillageItem(IVillageItem item);
 
-	void Sacrifice (Temple.ID templeId, Vector3 templeLocation);
+	void Sacrifice (Temple temple, Vector3 templeLocation);
 
 	VillageItemEnum ItemToSacrifice { get; }
 }

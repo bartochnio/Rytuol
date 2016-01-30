@@ -507,7 +507,7 @@ public class NavMesh2D : MonoBehaviour
             }
         }
 
-        Debug.DrawLine(dA, dB, Color.yellow);
+        //Debug.DrawLine(dA, dB, Color.yellow);
     }
 
     int Expand(List<Vector2> P, List<int> L, bool cw)

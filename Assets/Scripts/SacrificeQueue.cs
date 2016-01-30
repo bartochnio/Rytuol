@@ -61,13 +61,13 @@ public class SacrificeQueue : MonoBehaviour
 	}
 
 
-	public void DispatchToTheTemple(Temple.ID templeId, Vector2 templePos)
+	public void DispatchToTheTemple(Temple temple, Vector2 templePos)
     {
         for(int i = 0; i < queueSize; ++i)
         {
             if (peons[i] != null)
             {
-				peons [i].Sacrifice (templeId, templePos);
+				peons [i].Sacrifice (temple, templePos);
 
 				FreeSlot (i);
             }
