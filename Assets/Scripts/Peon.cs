@@ -86,10 +86,10 @@ public class Peon : MonoBehaviour, IMovable, IPeon
                 break;
         }
 
-        for (int i = 0; i < mPath.Count - 1; ++i)
-        {
-            Debug.DrawLine(mPath[i], mPath[i + 1], Color.red);
-        }
+        //for (int i = 0; i < mPath.Count - 1; ++i)
+        //{
+        //    Debug.DrawLine(mPath[i], mPath[i + 1], Color.red);
+        //}
     }
 
     void OnMove()
@@ -104,6 +104,14 @@ public class Peon : MonoBehaviour, IMovable, IPeon
             else if (actionState == State.eStoringFruit || actionState == State.eStoringSavage || actionState == State.eStoringAnimal)
             {
                 Payload.HidePayload();
+
+                switch (actionState)
+                {
+                    case State.eStoringFruit: Village.GetGlobalInstance().StoreFruit(transform.position); break;
+                    case State.eStoringSavage: Village.GetGlobalInstance().StoreSavage(transform.position); break;
+                    case State.eStoringAnimal: Village.GetGlobalInstance().StoreAnimal(transform.position); break;
+                }
+
                 MoveToPeonsArea();
             }
         }

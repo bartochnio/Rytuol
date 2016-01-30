@@ -9,8 +9,12 @@ public class Village : MonoBehaviour, IVillage {
 	}
 
 
-// public vars
-	public GameObject peonsAreaGO;
+    // public vars
+    public GameObject savageResourcePrefab;
+    public GameObject animalResourcePrefab;
+    public GameObject fruitResourcePrefab;
+
+    public GameObject peonsAreaGO;
 	public GameObject savagesAreaGO;
 	public GameObject fruitsAreaGO;
 	public GameObject animalsAreaGO;
@@ -24,14 +28,10 @@ public class Village : MonoBehaviour, IVillage {
 	float spawnWaitTime = 3.0f;
 
 	List<IPeon> peons = new List<IPeon>();
-	//List<IVillageItem> selectedVillageItems = new List<IVillageItem>();
-	//List<IVillageItem> selectedForestItems = new List<IForestItem>();
 
-
-
-// MonoBehaviour
-//
-	void Awake () {
+    // MonoBehaviour
+    //
+    void Awake () {
 		Village.globalInstance = this;
 	}
 
@@ -89,19 +89,25 @@ public class Village : MonoBehaviour, IVillage {
     }
 
 
-    public void RegisterVillageSavageSelection(IVillageItem item) {
-	}
+    public void StoreSavage(Vector2 pos)
+    {
+        GameObject.Instantiate(savageResourcePrefab,pos,Quaternion.identity);
+    }
 
-	public void RegisterVillageFruitSelection(IVillageItem item) {
-	}
+    public void StoreFruit(Vector2 pos)
+    {
+        GameObject.Instantiate(fruitResourcePrefab, pos, Quaternion.identity);
+    }
 
-	public void RegisterVillageAnimalSelection(IVillageItem item) {
-	}
+    public void StoreAnimal(Vector2 pos)
+    {
+        GameObject.Instantiate(animalResourcePrefab, pos, Quaternion.identity);
+    }
 
 
     // TODO: consider merging this 3 functions
 
-	public void OrderCaptureSavage(IForestItem item)
+    public void OrderCaptureSavage(IForestItem item)
     {
         IPeon p = PopPeon();
 

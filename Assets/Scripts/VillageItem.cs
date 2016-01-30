@@ -35,19 +35,19 @@ public class VillageItem : MonoBehaviour, IVillageItem {
 			return;
 		bSelected = true;
 
-		switch (itemType) {
-		case VillageItemEnum.eSavage:
-				Village.GetGlobalInstance ().RegisterVillageSavageSelection (this);
-				break;
+		//switch (itemType) {
+		//case VillageItemEnum.eSavage:
+		//		Village.GetGlobalInstance ().RegisterVillageSavageSelection (this);
+		//		break;
 
-		case VillageItemEnum.eFruit:
-				Village.GetGlobalInstance ().RegisterVillageFruitSelection (this);
-				break;
+		//case VillageItemEnum.eFruit:
+		//		Village.GetGlobalInstance ().RegisterVillageFruitSelection (this);
+		//		break;
 
-		case VillageItemEnum.eAnimal:
-				Village.GetGlobalInstance ().RegisterVillageAnimalSelection (this);
-				break;
-		}
+		//case VillageItemEnum.eAnimal:
+		//		Village.GetGlobalInstance ().RegisterVillageAnimalSelection (this);
+		//		break;
+		//}
 	}
 
 	public void Unselect() {

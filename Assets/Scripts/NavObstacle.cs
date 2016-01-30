@@ -6,6 +6,7 @@ using System.Collections.Generic;
 [ExecuteInEditMode]
 public class NavObstacle : MonoBehaviour
 {
+    public bool drawOutline = false;
     private PolygonCollider2D polygon;
 
     public List<Vector2> GetVerts() 
@@ -33,7 +34,8 @@ public class NavObstacle : MonoBehaviour
 
 	void LateUpdate () 
     {
-        DrawOutline();
+        if (drawOutline)
+            DrawOutline();
 	}
 
     void DrawOutline()

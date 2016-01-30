@@ -57,9 +57,9 @@ public interface IVillage {
 
     void RegisterPeon(IPeon peon);
 
-	void RegisterVillageSavageSelection(IVillageItem item);
-	void RegisterVillageFruitSelection(IVillageItem item);
-	void RegisterVillageAnimalSelection(IVillageItem item);
+	void StoreSavage(Vector2 pos);
+	void StoreFruit(Vector2 pos);
+	void StoreAnimal(Vector2 pos);
 
 	void OrderCaptureSavage(IForestItem item);
 	void OrderGatheringFruit(IForestItem item);
