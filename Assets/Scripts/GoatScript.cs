@@ -33,8 +33,9 @@ public class GoatScript : MonoBehaviour {
         GetComponent<ParticleSystem>().enableEmission = true;
         yield return new WaitForSeconds(0.2f);
         sfx.PlayOneShot(goatDeath[Random.RandomRange(0, goatDeath.Length)]);
- 
-        yield return new WaitForSeconds(0.2f);
+
+        while (sfx.isPlaying)
+            yield return new WaitForEndOfFrame();
         anim.Play("goat_death");
         GetComponent<ParticleSystem>().enableEmission = false;
     }
