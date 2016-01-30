@@ -2,6 +2,7 @@
 using System.Collections;
 
 [RequireComponent ( typeof ( Camera))]
+[ExecuteInEditMode]
 public class PixelPerfectCamera : MonoBehaviour {
 
     public int referencePPU = 100;
@@ -17,12 +18,9 @@ public class PixelPerfectCamera : MonoBehaviour {
     public float hStep;
 
     Camera c;
-    //public Texture2D t;
-    void Awake()
-    {
-        // TODO - USÓŃ!
-        // Cursor.SetCursor(t, Vector2.zero, CursorMode.Auto);
 
+    void SetPerfect()
+    {
         c = GetComponent<Camera>();
         perfectOrthoSize = (float)referenceHeight / ((float)referencePPU * 2f);
         c.orthographicSize = perfectOrthoSize;
@@ -33,6 +31,13 @@ public class PixelPerfectCamera : MonoBehaviour {
         hStep = worldHeight / referenceHeight;
         Debug.Log("PerfectOrtho: " + perfectOrthoSize + "\r\n H Step: " + hStep + " W Step: " + wStep);
     }
+    //public Texture2D t;
+    void Awake()
+    {
+        SetPerfect();
+    }
+
+
 
     public Vector2 SnapToPixelPerfectPos ( Vector2 current )
     {
@@ -49,5 +54,6 @@ public class PixelPerfectCamera : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+        SetPerfect();
 	}
 }
