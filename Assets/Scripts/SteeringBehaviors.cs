@@ -93,7 +93,7 @@ class SteeringBehaviors
         return mWaypointPath.HasFinished() && Vector2.Distance(mWaypointPath.GetCurrent(),mOwner.position) < 0.1f;
     }
 
-    public void SetPath(List<Vector2> path, bool loop)
+    public void SetPath(List<Vector2> path, bool loop = false)
     {
         mWaypointPath.Reset();
         mWaypointPath.mWaypoints = path;
