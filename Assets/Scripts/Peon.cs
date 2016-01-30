@@ -2,13 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Critter : MonoBehaviour, IMovable
+public class Peon : MonoBehaviour, IMovable
 {
-    public float MaxSpeed;
+    public float MaxSpeed = 1.0f;
 
     //IMovable
     public Vector3 velocity { get; set; }
-    public float maxSpeed { get { return MaxSpeed; }}
+    public float maxSpeed { get { return MaxSpeed; } }
     public Vector3 position { get { return transform.position; } set { transform.position = value; } }
     public float speed { get { return velocity.magnitude; } }
     public Vector3 heading { get { return (velocity.sqrMagnitude > 0.001f) ? velocity.normalized : Vector3.zero; } }
@@ -18,6 +18,13 @@ public class Critter : MonoBehaviour, IMovable
     ArrayList mNeighbours = new ArrayList();
     List<Vector2> mPath = new List<Vector2>();
 
+    enum STATE
+    {
+        IDLE,
+        MOVE
+    };
+
+    STATE mState;
 
     // Use this for initialization
     void Start ()
@@ -26,23 +33,47 @@ public class Critter : MonoBehaviour, IMovable
         //MaxSpeed = 2.0f;
 
         mSteering = new SteeringBehaviors(this);
-        Vector2 target = NavMesh2D.GetInstance().GetRandomPos();
-        mPath = AStar.GetInstance().FindPath(transform.position, target);
-        mSteering.SetPath(mPath, false);
-
-        //INTERNAL
         mSteering.SetFlag(Behavior.separation);
-        //mSteering.SetFlag(Behavior.alignment);
-        //mSteering.SetFlag(Behavior.cohesion);
-        mSteering.SetFlag(Behavior.followPath);
-        //mSteering.SetFlag(Behavior.wander2d);
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        Vector3 steering = mSteering.Compute();
+        switch (mState)
+        {
+            case STATE.MOVE:
+                OnMove();
+                break;
 
+            case STATE.IDLE:
+                OnIdle();
+                break;
+        }
+
+        Locomotion();
+    }
+
+    void OnMove()
+    {
+
+    }
+
+    void OnIdle()
+    {
+
+    }
+
+    public void MoveToPoint(Vector2 pos)
+    {
+        mState = STATE.MOVE;
+        mSteering.SetFlag(Behavior.followPath);
+        mPath = AStar.GetInstance().FindPath(transform.position, pos);
+        mSteering.SetPath(mPath);
+    }
+
+    void Locomotion()
+    {
+        Vector3 steering = mSteering.Compute();
         velocity += steering * Time.deltaTime * 5.0f;
         velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
 
@@ -51,22 +82,6 @@ public class Critter : MonoBehaviour, IMovable
 
         //movement
         transform.position += velocity * Time.deltaTime;
-
-        //heading
-        //if (velocity.sqrMagnitude > 0.01f)
-        //    transform.right = velocity.normalized;
-
-        if (mSteering.IsPathFinished())
-        {
-            Vector2 target = NavMesh2D.GetInstance().GetRandomPos();
-            mPath = AStar.GetInstance().FindPath(transform.position, target);
-            mSteering.SetPath(mPath, false);
-        }
-
-        //for(int i = 0; i < mPath.Count-1; ++i)
-        //{
-        //    Debug.DrawLine(mPath[i], mPath[i + 1], Color.red);
-        //}
     }
 
     void OnTriggerEnter2D(Collider2D other)
