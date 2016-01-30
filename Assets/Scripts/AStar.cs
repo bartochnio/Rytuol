@@ -6,8 +6,8 @@ using System.Linq;
 //[ExecuteInEditMode]
 public class AStar : MonoBehaviour
 {
-    public NavMesh2D navMesh;
-    public Transform player;
+    private NavMesh2D navMesh;
+    //public Transform player;
 
     class Node : IComparable<Node>
     {
@@ -25,6 +25,22 @@ public class AStar : MonoBehaviour
         }
     }
 
+    static private AStar instance = null;
+    public static AStar GetInstance()
+    {
+        return instance;
+    }
+
+    void Awake()
+    {
+        AStar.instance = this;
+    }
+
+    void OnEnable()
+    {
+        navMesh = GetComponent<NavMesh2D>();
+    }
+
 	void Start ()
     {
 	
@@ -32,13 +48,13 @@ public class AStar : MonoBehaviour
 
     void Update ()
     {
-        List<Vector2> path = FindPath(Vector2.zero, player.position);
+        //List<Vector2> path = FindPath(Vector2.zero, player.position);
 
-        //debug draw
-        for (int i = 0; i < path.Count - 1; ++i)
-        {
-            Debug.DrawLine(path[i], path[i + 1], Color.red);
-        }
+        ////debug draw
+        //for (int i = 0; i < path.Count - 1; ++i)
+        //{
+        //    Debug.DrawLine(path[i], path[i + 1], Color.red);
+        //}
     }
 
     public List<Vector2> FindPath(Vector2 pos, Vector2 target)

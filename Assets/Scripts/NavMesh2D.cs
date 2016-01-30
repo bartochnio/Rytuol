@@ -6,8 +6,6 @@ using System;
 [ExecuteInEditMode]
 public class NavMesh2D : MonoBehaviour 
 {
-    //for debugging
-    public Transform player;
 
     public bool debugDrawOutline = false;
     public bool debugDrawPolys = false;
@@ -132,6 +130,17 @@ public class NavMesh2D : MonoBehaviour
         polygon = GetComponent<PolygonCollider2D>();
     }
 
+    static private NavMesh2D instance = null ;
+    public static NavMesh2D GetInstance()
+    {
+        return instance;
+    }
+
+    void Awake()
+    {
+        NavMesh2D.instance = this;
+    }
+
 	void Start () 
     {
         if (!generateOnUpdate)
@@ -155,18 +164,17 @@ public class NavMesh2D : MonoBehaviour
         //debug draw
         if (debugDrawOutline)
             DrawOutline();
-
-
-        int nodeIdx = FindContainingNode(player.position);
-        if (nodeIdx > -1)
-        {
-            nodes[nodeIdx].DrawNeighbours();
-        }
     }
 
     public Node GetNode(int idx)
     {
         return nodes[idx];
+    }
+
+    public Vector2 GetRandomPos()
+    {
+        int idx = UnityEngine.Random.RandomRange(0, nodes.Count - 1);
+        return nodes[idx].center;
     }
 
     public int FindContainingNode(Vector2 p)
