@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 
-//[ExecuteInEditMode]
 public class AStar : MonoBehaviour
 {
     private NavMesh2D navMesh;
@@ -15,6 +14,7 @@ public class AStar : MonoBehaviour
         public float Hcost;
         public int NavNodeIdx;
         public Node parent;
+        public Vector2 pos;
 
         public int CompareTo(Node other)
         {
@@ -83,6 +83,7 @@ public class AStar : MonoBehaviour
         startNode.Hcost = 0.0f;
         startNode.NavNodeIdx = startIdx;
         startNode.parent = null;
+        startNode.pos = pos;
         List<Node> openList = new List<Node>();
         openList.Add(startNode);
 
@@ -159,22 +160,27 @@ public class AStar : MonoBehaviour
                 {
                     //compute cost
                     Node child = new Node();
-                    child.Gcost = Vector2.Distance(navNode.center, navChild.center);
-                    child.Hcost = Vector2.Distance(navChild.center, target);
+
+                    NavMesh2D.Edge edge = navNode.GetEdge(idx);
+                    Vector2 childPos = ((edge.e2 - edge.e1) / 2.0f) + edge.e1;
+
+                    child.Gcost = Vector2.Distance(node.pos, childPos);
+                    child.Hcost = Vector2.Distance(childPos, target);
                     child.parent = node;
+                    child.pos = childPos;
                     child.NavNodeIdx = idx;
                     openList.Add(child);
                 }
                 else
                 {
-                    //Node child = openList.First(w => w.NavNodeIdx == idx);
-                    //float G = Vector2.Distance(navNode.center, navChild.center);
+                    Node child = openList.First(w => w.NavNodeIdx == idx);
+                    float G = Vector2.Distance(node.pos, child.pos) + node.Gcost;
 
-                    //if (child.Gcost > G)
-                    //{
-                    //    child.Gcost = G;
-                    //    child.parent = node;
-                    //}
+                    if (child.Gcost > G)
+                    {
+                        child.Gcost = G;
+                        child.parent = node;
+                    }
                 }
             }
         }
