@@ -30,3 +30,7 @@ sysinfo.txt
 ProjectSettings/ProjectSettings.asset
 
 ProjectSettings/ProjectVersion.txt
+
+Assets/Materials/Temp/New Folder.meta
+
+Assets/Scripts/Critter.cs

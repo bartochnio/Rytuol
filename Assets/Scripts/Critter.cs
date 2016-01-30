@@ -39,16 +39,7 @@ public class Critter : MonoBehaviour, IMovable, IForestItem
 
         SetColor(Color.red);
 
-        switch (itemType)
-        {
-            case ForestItemEnum.eSavage:
-                Village.GetGlobalInstance().OrderCaptureSavage(this);
-                break;
-
-            case ForestItemEnum.eAnimal:
-                Village.GetGlobalInstance().OrderHuntAnimal(this);
-                break;
-        }
+		Village.GetGlobalInstance().OrderCaptureItem(this);
     }
 
     // IForestItem
