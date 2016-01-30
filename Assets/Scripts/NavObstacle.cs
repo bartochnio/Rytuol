@@ -10,6 +10,7 @@ public class NavObstacle : MonoBehaviour
 
     public List<Vector2> GetVerts() 
     {
+        polygon = GetComponent<PolygonCollider2D>();
         List<Vector2> verts = new List<Vector2>(polygon.GetPath(0));
         //transform to world space
         for(int i = 0; i < verts.Count; ++i)
@@ -21,6 +22,11 @@ public class NavObstacle : MonoBehaviour
     }
 
     void OnEnable()
+    {
+        polygon = GetComponent<PolygonCollider2D>();
+    }
+
+    void Awake()
     {
         polygon = GetComponent<PolygonCollider2D>();
     }

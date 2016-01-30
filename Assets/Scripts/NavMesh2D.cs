@@ -202,6 +202,7 @@ public class NavMesh2D : MonoBehaviour
 
     public void Generate()
     {
+        polygon = GetComponent<PolygonCollider2D>();
         Decompose();
     }
 
