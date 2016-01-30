@@ -9,16 +9,32 @@ public class GoatScript : MonoBehaviour {
     public AudioClip blood; 
     public AudioSource sfx;
     Animator anim;
-    public GameObject smoke; 
+    public GameObject smoke;
+    public int clicks;
 
-	void Start () {
+    void Start () {
         sfx.volume = Random.RandomRange(0.8f, 1f);
         sfx.pitch = Random.RandomRange(0.75f, 1f);
         sfx.PlayOneShot(beeeee);
         anim = GetComponent<Animator>();
         GetComponent<ParticleSystem>().enableEmission = false;
-        StartCoroutine("GoatDeathSounds");
+    //    StartCoroutine("GoatDeathSounds");
     }
+
+    void OnMouseDown()
+    {
+        clicks++;
+
+        if (clicks >= 10)
+        {
+            smoke.GetComponent<SpriteRenderer>().enabled = true;
+            smoke.GetComponent<Animator>().enabled = true;
+            anim.Play("goat_death");
+        }
+    }
+
+
+   
 
     public void GoatDeath()
     {
@@ -49,6 +65,6 @@ public class GoatScript : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-	
+	   
 	}
 }
