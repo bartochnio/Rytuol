@@ -86,7 +86,10 @@ public class Peon : MonoBehaviour, IMovable, IPeon
                 break;
         }
 
-        
+        for (int i = 0; i < mPath.Count - 1; ++i)
+        {
+            Debug.DrawLine(mPath[i], mPath[i + 1], Color.red);
+        }
     }
 
     void OnMove()
