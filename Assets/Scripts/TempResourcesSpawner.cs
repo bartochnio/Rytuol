@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class TempResourcesSpawner : MonoBehaviour {
 
     public float timeToMoveToCollected = 3f;
-    public float timeToSacrifice = 1f;
+    public float timeBetweenSacrifices = 1f;
 
     public float minimalSpawnInterval = 1f;
     public float maximalSpawnInterval = 3f;
@@ -31,19 +31,30 @@ public class TempResourcesSpawner : MonoBehaviour {
     {
         if (p != null)
         {
-            if (currentResource != null)
+            if (resourceList.Count > 0 )
             {
-                StartCoroutine(FeedSacrifice(currentResource, p));
+                feed = true;
+                StartCoroutine(FeedSacrifice(p));
             }
         }
     }
 
-    IEnumerator FeedSacrifice(TempResourceButton b, Pyramid p)
+    bool feed = false;
+
+    IEnumerator FeedSacrifice(Pyramid p)
     {
-        currentResource.GetComponent<Button>().interactable = false;
-        yield return new WaitForSeconds(timeToSacrifice);
-        p.ReciveSacrifice(b.sacType);
-        Destroy(b.gameObject);
+        while (resourceList.Count > 0)
+        {
+            TempResourceButton b = resourceList[0];
+            b.GetComponent<Button>().interactable = false;
+            yield return new WaitForSeconds(timeBetweenSacrifices);
+            p.ReciveSacrifice(b.sacType);
+            resourceList.Remove(b);
+            Destroy(b.gameObject);
+        }
+
+        feed = false;
+
     }
 
     void Awake()
@@ -107,6 +118,7 @@ public class TempResourcesSpawner : MonoBehaviour {
     {
         yield return new WaitForSeconds(timeToMoveToCollected);
         button.transform.SetParent ( storageTransform );
+        resourceList.Add(button);
         button.GetComponent<Button>().interactable = true;
         button.myState = TempResourceButton.ResourceState.Collected;
     }
