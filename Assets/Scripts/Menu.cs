@@ -13,7 +13,8 @@ public class Menu : MonoBehaviour {
 
     public void StartButton()
     {
-        Application.LoadLevel ("Main"); 
+        Application.LoadLevel("Main");
     }
+
 
 }
