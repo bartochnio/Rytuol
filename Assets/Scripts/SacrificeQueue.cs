@@ -12,7 +12,7 @@ public class SacrificeQueue : MonoBehaviour
 
     public int queueSize = 5;
     public Transform startingPos;
-    public Vector2 offset;
+	public float offset = 0.5f;
 
 
     int[] slots;
@@ -87,7 +87,7 @@ public class SacrificeQueue : MonoBehaviour
 
     public Vector2 GetSlotPos(int idx)
     {
-        Vector2 pos = (Vector2)startingPos.position + offset*idx;
+		Vector2 pos = (Vector2)startingPos.position + ((Vector2)startingPos.right)*offset*idx;
 
         return pos;
     }
