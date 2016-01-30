@@ -13,16 +13,7 @@ public class ForestItem : MonoBehaviour, IForestItem {
 // MonoBehaviour
 //
 	void OnMouseDown() {
-		switch (itemType) {
-		case ForestItemEnum.eSavage:
-			break;
-
-		case ForestItemEnum.eFruit:
-			break;
-
-		case ForestItemEnum.eAnimal:
-			break;
-		}
+        Select();
 	}
 
 
