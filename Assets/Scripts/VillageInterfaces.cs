@@ -36,8 +36,10 @@ public interface IVillageItem {
 public interface IPeon {
 	void MoveToPeonsArea();
     void StoreForestItem(IForestItem item);
-	void SeekVillageItem(IVillageItem item);
+    void RetrieveVillageItem(IVillageItem item);
+    void SeekVillageItem(IVillageItem item, int queueSlot);
 	void SeekForestItem(IForestItem item);
+    void Sacrifice(Vector3 p);
 }
 
 public interface IStorageArea {
@@ -64,5 +66,9 @@ public interface IVillage {
 	void OrderCaptureSavage(IForestItem item);
 	void OrderGatheringFruit(IForestItem item);
 	void OrderHuntAnimal(IForestItem item);
+
+    void OrderSacrificeSavage(IVillageItem item, int queueSlot);
+    void OrderSacrificeFruit(IVillageItem item, int queueSlot);
+    void OrderSacrificeAnimal(IVillageItem item, int queueSlot);
 }
 

@@ -90,7 +90,7 @@ public class AStar : MonoBehaviour
 
         bool foundPath = false;
 
-        int count = 10;
+        //int count = 10;
         while (openList.Count > 0 || !foundPath)
         {
             openList.Sort();

@@ -20,6 +20,7 @@ public class Peon : MonoBehaviour, IMovable, IPeon
     ArrayList mNeighbours = new ArrayList();
     List<Vector2> mPath = new List<Vector2>();
     Transform mTarget;
+    int mQueueSlot = -1;
 
     enum State
     {
@@ -65,20 +66,32 @@ public class Peon : MonoBehaviour, IMovable, IPeon
     {
         switch (actionState)
         {
-            case State.eMovingToPeonsArea:
-            case State.eGatheringFruit:
-                OnMove();
-                break;
-
             case State.eTamingAnimal:
             case State.eCapturingSavage:        
                 OnPursue();
                 break;
 
+            case State.eOfferingAnimal:
+            case State.eOfferingSavage:
+            case State.eOfferingFruit:
+                OnOffering();
+                break;
+
+            case State.eRetrievingAnimal:
+            case State.eRetrievingSavage:
+            case State.eRetrievingFruit:
+                OnRetrieving();
+                break;
+
+            case State.eMovingToPeonsArea:
+            case State.eGatheringFruit:
+                OnMove();
+                break;
+
             case State.eStoringFruit:
             case State.eStoringAnimal:
             case State.eStoringSavage:
-                OnMove();
+                OnStoring();
                 break;
 
             case State.eIdle:
@@ -119,6 +132,46 @@ public class Peon : MonoBehaviour, IMovable, IPeon
         Locomotion();
     }
 
+    void OnRetrieving()
+    {
+        if (mSteering.IsPathFinished())
+        {
+            Payload.HidePayload();
+        }
+
+        Locomotion();
+    }
+
+    void OnOffering()
+    {
+        if (mSteering.IsPathFinished())
+        {
+            SacrificeQueue.GetInstance().RegisterPeon(this, mQueueSlot);
+            actionState = State.eIdle;
+        }
+
+        Locomotion();
+    }
+
+    void OnStoring()
+    {
+        if (mSteering.IsPathFinished())
+        {
+            Payload.HidePayload();
+
+            switch (actionState)
+            {
+                case State.eStoringFruit: Village.GetGlobalInstance().StoreFruit(transform.position); break;
+                case State.eStoringSavage: Village.GetGlobalInstance().StoreSavage(transform.position); break;
+                case State.eStoringAnimal: Village.GetGlobalInstance().StoreAnimal(transform.position); break;
+            }
+
+            MoveToPeonsArea();
+        }
+
+        Locomotion();
+    }
+
     void OnPursue()
     {
         MoveToPoint(mTarget.position);
@@ -134,6 +187,11 @@ public class Peon : MonoBehaviour, IMovable, IPeon
     {
         actionState = State.eMovingToPeonsArea;
         MoveToPoint(Village.GetGlobalInstance().PeonsArea.AnyLocation);
+    }
+
+    public void Sacrifice(Vector3 p)
+    {
+
     }
 
     public void StoreForestItem(IForestItem item)
@@ -164,9 +222,53 @@ public class Peon : MonoBehaviour, IMovable, IPeon
         mTarget = null;
     }
 
-    public void SeekVillageItem(IVillageItem item)
+    public void RetrieveVillageItem(IVillageItem item)
     {
+        switch (item.ItemType)
+        {
+            case VillageItemEnum.eFruit:
+                actionState = State.eOfferingFruit;
+                Payload.ShowPayload(VillageItemEnum.eFruit);
+                break;
 
+            case VillageItemEnum.eAnimal:
+                actionState = State.eOfferingAnimal;
+                Payload.ShowPayload(VillageItemEnum.eAnimal);
+                break;
+
+            case VillageItemEnum.eSavage:
+                actionState = State.eOfferingSavage;
+                Payload.ShowPayload(VillageItemEnum.eSavage);
+                break;
+        }
+
+        MoveToPoint(SacrificeQueue.GetInstance().GetSlotPos(mQueueSlot));
+        GameObject.Destroy((item as VillageItem).gameObject);
+        mTarget = null;
+    }
+
+    public void SeekVillageItem(IVillageItem item, int queueSlot)
+    {
+        mTarget = ((VillageItem)item).transform;
+        mQueueSlot = queueSlot;
+        
+        switch (item.ItemType)
+        {
+            case VillageItemEnum.eSavage:
+                actionState = State.eRetrievingSavage;
+                MoveToPoint(mTarget.position);
+                break;
+
+            case VillageItemEnum.eFruit:
+                MoveToPoint(mTarget.position);
+                actionState = State.eRetrievingFruit;
+                break;
+
+            case VillageItemEnum.eAnimal:
+                actionState = State.eRetrievingAnimal;
+                MoveToPoint(mTarget.position);
+                break;
+        }
     }
 
     public void SeekForestItem(IForestItem item)
@@ -228,7 +330,9 @@ public class Peon : MonoBehaviour, IMovable, IPeon
             } 
             else
             {
-                actionState = State.eIdle;
+                var villageItem = mTarget.GetComponent<IVillageItem>();
+                this.RetrieveVillageItem(villageItem);
+                villageItem.Unselect();
             }
         }
 

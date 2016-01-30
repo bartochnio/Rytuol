@@ -136,4 +136,43 @@ public class Village : MonoBehaviour, IVillage {
         else
             item.Unselect();
     }
+
+    public void OrderSacrificeSavage(IVillageItem item, int queueSlot)
+    {
+        IPeon p = PopPeon();
+
+        if (p != null)
+            p.SeekVillageItem(item, queueSlot);
+        else
+        {
+            item.Unselect();
+            SacrificeQueue.GetInstance().Free(queueSlot);
+        }
+    }
+
+    public void OrderSacrificeFruit(IVillageItem item, int queueSlot)
+    {
+        IPeon p = PopPeon();
+
+        if (p != null)
+            p.SeekVillageItem(item, queueSlot);
+        else
+        {
+            item.Unselect();
+            SacrificeQueue.GetInstance().Free(queueSlot);
+        }
+    }
+
+    public void OrderSacrificeAnimal(IVillageItem item, int queueSlot)
+    {
+        IPeon p = PopPeon();
+
+        if (p != null)
+            p.SeekVillageItem(item, queueSlot);
+        else
+        {
+            item.Unselect();
+            SacrificeQueue.GetInstance().Free(queueSlot);
+        }
+    }
 }

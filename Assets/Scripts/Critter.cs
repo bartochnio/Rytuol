@@ -28,7 +28,6 @@ public class Critter : MonoBehaviour, IMovable, IForestItem
     //
     void OnMouseDown()
     {
-        Debug.Log("EHAEHAEGAEa");
         Select();
     }
 

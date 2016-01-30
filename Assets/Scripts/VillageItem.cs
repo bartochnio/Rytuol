@@ -13,9 +13,9 @@ public class VillageItem : MonoBehaviour, IVillageItem {
 // MonoBehaviour
 //
 	void Update() {
-		if (bSelected) {
-			transform.Rotate (Vector3.up, 360.0f * Time.deltaTime);
-		}
+		//if (bSelected) {
+		//	transform.Rotate (Vector3.up, 360.0f * Time.deltaTime);
+		//}
 	}
 
 	void OnMouseDown() {
@@ -31,27 +31,46 @@ public class VillageItem : MonoBehaviour, IVillageItem {
 	}
 
 	public void Select() {
-		if (bSelected)
+        
+
+        if (bSelected)
 			return;
 		bSelected = true;
 
-		//switch (itemType) {
-		//case VillageItemEnum.eSavage:
-		//		Village.GetGlobalInstance ().RegisterVillageSavageSelection (this);
-		//		break;
+        SetColor(Color.red);
 
-		//case VillageItemEnum.eFruit:
-		//		Village.GetGlobalInstance ().RegisterVillageFruitSelection (this);
-		//		break;
+        int queueSlot = SacrificeQueue.GetInstance().Reserve();
+        if (queueSlot < 0)
+        {
+            Unselect();
+            return;
+        }
 
-		//case VillageItemEnum.eAnimal:
-		//		Village.GetGlobalInstance ().RegisterVillageAnimalSelection (this);
-		//		break;
-		//}
-	}
+        switch (itemType)
+        {
+            case VillageItemEnum.eSavage:
+                Village.GetGlobalInstance().OrderSacrificeSavage(this,queueSlot);
+                break;
+
+            case VillageItemEnum.eAnimal:
+                Village.GetGlobalInstance().OrderSacrificeAnimal(this, queueSlot);
+                break;
+
+            case VillageItemEnum.eFruit:
+                Village.GetGlobalInstance().OrderSacrificeAnimal(this, queueSlot);
+                break;
+        }
+    }
 
 	public void Unselect() {
 		bSelected = false;
 		transform.rotation = Quaternion.identity;
-	}
+        SetColor(Color.white);
+    }
+
+    void SetColor(Color c)
+    {
+        SpriteRenderer render = GetComponentInChildren<SpriteRenderer>();
+        render.color = c;
+    }
 }
