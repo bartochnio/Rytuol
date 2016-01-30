@@ -4,9 +4,11 @@ using System.Collections.Generic;
 
 public class Critter : MonoBehaviour, IMovable
 {
+    public float MaxSpeed;
+
     //IMovable
     public Vector3 velocity { get; set; }
-    public float maxSpeed { get; set; }
+    public float maxSpeed { get { return MaxSpeed; }}
     public Vector3 position { get { return transform.position; } set { transform.position = value; } }
     public float speed { get { return velocity.magnitude; } }
     public Vector3 heading { get { return (velocity.sqrMagnitude > 0.001f) ? velocity.normalized : Vector3.zero; } }
@@ -21,7 +23,7 @@ public class Critter : MonoBehaviour, IMovable
     void Start ()
     {
         velocity = Vector3.right;
-        maxSpeed = 2.0f;
+        //MaxSpeed = 2.0f;
 
         mSteering = new SteeringBehaviors(this);
         Vector2 target = NavMesh2D.GetInstance().GetRandomPos();

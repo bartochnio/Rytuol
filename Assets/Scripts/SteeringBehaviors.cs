@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public interface IMovable
 {
     Vector3 velocity { get; set; }
-    float maxSpeed { get; set; }
+    float maxSpeed { get; }
     Vector3 position { get; set; }
     float speed { get; }
     Vector3 heading { get; }
