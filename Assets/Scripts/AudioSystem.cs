@@ -52,10 +52,10 @@ public class AudioSystem : MonoBehaviour {
     public IEnumerator PlayRandomBeee()
     {
         while (randomBeeee) { 
-            float beeecooldown = Random.RandomRange(6f, 10f);
+            float beeecooldown = Random.Range(6f, 10f);
             yield return new WaitForSeconds(beeecooldown);
-            sfx.volume = Random.RandomRange(0.6f, 1f);
-            sfx.pitch = Random.RandomRange(0.65f, 1f);
+            sfx.volume = Random.Range(0.6f, 1f);
+            sfx.pitch = Random.Range(0.65f, 1f);
             sfx.PlayOneShot(beeee);
 
         }
