@@ -13,14 +13,17 @@ public class GoatScript : MonoBehaviour {
     public int clicks;
    public bool coolBool;
    public float cd = 1.5f;
-   public float time; 
+   public float time;
+    Critter crit; 
 
     void Awake ()
     {
         if (sfx == null)
             sfx = GameObject.Find("Audio/AudioSFX").GetComponent<AudioSource>();
+        crit = GetComponent<Critter>();
 
     }
+
 
     void Start () {
         sfx.volume = Random.RandomRange(0.8f, 1f);
@@ -42,6 +45,7 @@ public class GoatScript : MonoBehaviour {
             smoke.GetComponent<Animator>().enabled = true;
             anim.Play("goat_death");
         }
+        
     }
 
 
@@ -76,6 +80,17 @@ public class GoatScript : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+
+
+        if (crit.velocity.x > 0 && crit.velocity.y > 0)
+            anim.SetTrigger("U");
+        if (crit.velocity.x < 0 && crit.velocity.y > 0)
+            anim.SetTrigger("R");
+        if (crit.velocity.x < 0 && crit.velocity.y < 0)
+            anim.SetTrigger("D");
+        if (crit.velocity.x > 0 && crit.velocity.y < 0)
+            anim.SetTrigger("L");
+
         if (coolBool)
         {
             time += Time.deltaTime;
