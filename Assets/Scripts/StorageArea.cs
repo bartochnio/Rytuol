@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class StorageArea : MonoBehaviour, IStorageArea {
 	public VillageItemEnum containedItemType;
 
-
+    private List<VillageItem> _itemsList = new List<VillageItem>();
+    public List<VillageItem> itemsList {  get { return _itemsList; } }
 // IStorageArea
 	public VillageItemEnum ContainedItemType {
 		get { return containedItemType; }
@@ -24,4 +26,23 @@ public class StorageArea : MonoBehaviour, IStorageArea {
             return randomPoint;
 		}
 	}
+    void Update ()
+    {
+
+        if ( Input.GetKeyDown ( KeyCode.Alpha1))
+        {
+            if ( itemsList.Count > 0)
+            {
+                itemsList[0].Select();
+            }
+        }
+    }
+    void OnButtonDown()
+    {
+        Debug.Log("Storage Cliced");
+        if ( itemsList.Count > 0)
+        {
+            itemsList[0].Select();
+        }
+    }
 }

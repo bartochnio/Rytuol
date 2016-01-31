@@ -323,6 +323,23 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 
 	public void RetrieveVillageItem(IVillageItem item)
 	{
+        IStorageArea a = Village.GetGlobalInstance().AnimalsArea;
+        switch ( item.ItemType)
+        {
+            case VillageItemEnum.eFruit:
+                a = Village.GetGlobalInstance().FruitsArea;
+                break;
+            case VillageItemEnum.eSavage:
+                a = Village.GetGlobalInstance().SavagesArea;
+                break;
+        }
+
+        VillageItem sI = item as VillageItem;
+        if ( a.itemsList.Contains( sI ))
+        {
+            a.itemsList.Remove(sI);
+        }
+
 		payLoadVillageItem = item.ItemType;
 		actionState = State.eQueueingItem;
 		Payload.ShowPayload(item.ItemType);

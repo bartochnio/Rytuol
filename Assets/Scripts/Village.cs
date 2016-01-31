@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class Village : MonoBehaviour, IVillage {
@@ -95,11 +96,14 @@ public class Village : MonoBehaviour, IVillage {
 
 	public void StoreItem(Vector2 pos, ForestItemEnum itmType)
     {
+        StorageArea area;
 		switch(itmType)
 		{
 		case ForestItemEnum.eSavage:
 			{
 				GameObject go = GameObject.Instantiate (savageResourcePrefab, pos, Quaternion.identity) as GameObject;
+                area = SavagesArea as StorageArea;
+                    area.itemsList.Add(go.GetComponent<VillageItem>());
 				go.transform.parent = (SavagesArea as StorageArea).transform;
 			}
 			break;
@@ -107,6 +111,8 @@ public class Village : MonoBehaviour, IVillage {
 		case ForestItemEnum.eAnimal:
 			{
 				GameObject go = GameObject.Instantiate (animalResourcePrefab, pos, Quaternion.identity) as GameObject;
+                area = AnimalsArea as StorageArea;
+                    area.itemsList.Add(go.GetComponent<VillageItem>());
 				go.transform.parent = (AnimalsArea as StorageArea).transform;
 			}
 			break;
@@ -114,6 +120,8 @@ public class Village : MonoBehaviour, IVillage {
 		case ForestItemEnum.eFruit:
 			{
 				GameObject go = GameObject.Instantiate (fruitResourcePrefab, pos, Quaternion.identity) as GameObject;
+                area = FruitsArea as StorageArea;
+                    area.itemsList.Add(go.GetComponent<VillageItem>());
 				go.transform.parent = (FruitsArea as StorageArea).transform;
 			}
 			break;
