@@ -253,15 +253,17 @@ public class Peon : MonoBehaviour, IMovable, IPeon
         //movement
         transform.position += velocity * Time.deltaTime;
 
-        if (velocity.x > 0 && velocity.y > 0)
-            anim.SetTrigger("UR");
-        if (velocity.x < 0 && velocity.y > 0)
-            anim.SetTrigger("UL");
-        if (velocity.x < 0 && velocity.y < 0)
-            anim.SetTrigger("DL");
-        if (velocity.x > 0 && velocity.y < 0)
-            anim.SetTrigger("DR");
-      
+        if (heading.magnitude > 0.01f)
+        {
+            if (heading.x > 0 && heading.y > 0)
+                anim.SetTrigger("UR");
+            else if (heading.x < 0 && heading.y > 0)
+                anim.SetTrigger("UL");
+            else if (heading.x < 0 && heading.y < 0)
+                anim.SetTrigger("DL");
+            else if (heading.x > 0 && heading.y < 0)
+                anim.SetTrigger("DR");
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
