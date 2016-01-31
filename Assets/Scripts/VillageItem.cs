@@ -32,7 +32,12 @@ public class VillageItem : MonoBehaviour, IVillageItem {
 		get { return itemType; }
 	}
 
-	public void Select() {
+    public void Select ()
+    {
+        Select(null);
+    }
+
+	public void Select( object caller) {
 
         
         if (bSelected)
@@ -44,6 +49,10 @@ public class VillageItem : MonoBehaviour, IVillageItem {
         int queueSlot = SacrificeQueue.GetInstance().ReserveSlot();
         if (queueSlot < 0)
         {
+            if (caller is StorageArea)
+            {
+                (caller as StorageArea).ReturnItemToTheList(this);
+            }
             Unselect();
             return;
         }

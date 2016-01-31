@@ -367,9 +367,9 @@ public class Peon : MonoBehaviour, IMovable, IPeon
         }
 
         VillageItem sI = item as VillageItem;
-        if ( a.itemsList.Contains( sI ))
+        if ( a.retriveList.Contains( sI ))
         {
-            a.itemsList.Remove(sI);
+            a.retriveList.Remove(sI);
         }
 
 		payLoadVillageItem = item.ItemType;

@@ -41,6 +41,7 @@ public interface IStorageArea {
 	VillageItemEnum ContainedItemType { get; }
 	Vector3 AnyLocation { get; }
     List<VillageItem> itemsList { get; }
+    List<VillageItem> retriveList { get; }
 }
 
 public interface IPeonsArea {
