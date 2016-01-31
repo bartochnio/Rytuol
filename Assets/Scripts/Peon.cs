@@ -198,6 +198,7 @@ public class Peon : MonoBehaviour, IMovable, IPeon
             MoveToPeonsArea();
             targetTemple.ReciveSacrifice(ItemToSacrifice);
         }
+		mQueueSlot = -1;
 	}
     
 
@@ -403,11 +404,7 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 
 	public bool IsSafeToKill {
 		get {
-			/*return (actionState == State.eMovingToPeonsArea)
-				|| (actionState == State.eStoringItem)
-				|| (actionState == State.eQueueingItem)
-				|| (actionState == State.eOfferingItem);*/
-			return true;
+			return mQueueSlot == -1;
 		}
 	}
 
@@ -422,6 +419,11 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 				vi.Unselect ();
 			}
 		}
+
+		if (actionState == State.eIdle) {
+			Village.GetGlobalInstance ().UnregisterPeon (this); // unregister itself if waiting in peons area
+		}
+
 		GameObject.Destroy (gameObject);
 	}
 }

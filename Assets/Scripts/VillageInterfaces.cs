@@ -56,6 +56,7 @@ public interface IVillage {
 	IStorageArea AnimalsArea { get; }
 
     void RegisterPeon(IPeon peon);
+	void UnregisterPeon (IPeon peon);
 	bool IsPeonRegistered (IPeon peon);
 
 	void StoreItem(Vector2 pos, ForestItemEnum itmType);

@@ -93,6 +93,14 @@ public class Village : MonoBehaviour, IVillage {
         peons.Add(peon);
     }
 
+	public bool IsPeonRegistered(IPeon peon) {
+		return (peons.Find (x => x == peon) != null);
+	}
+
+	public void UnregisterPeon (IPeon peon) {
+		peons.Remove (peon);
+	}
+
 
 	public void StoreItem(Vector2 pos, ForestItemEnum itmType)
     {
@@ -165,8 +173,4 @@ public class Village : MonoBehaviour, IVillage {
             SacrificeQueue.GetInstance().FreeSlot(queueSlot);
         }
     }
-
-	public bool IsPeonRegistered(IPeon peon) {
-		return (peons.Find (x => x == peon) != null);
-	}
 }
