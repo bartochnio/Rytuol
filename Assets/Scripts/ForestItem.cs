@@ -8,14 +8,30 @@ public class ForestItem : MonoBehaviour, IForestItem {
 
 // private vars
 	bool bSelected;
+	bool bAppleExists = false;
 
 
 // MonoBehaviour
 //
 	void OnMouseDown()
     {
+		if (!bAppleExists)
+			return;
+		
         Select();
     }
+
+
+// public functions
+//
+	public void AppleSpawned() {
+		bAppleExists = true;
+	}
+
+	public void ApplePicked() {
+		bAppleExists = false;
+	}
+
 
 
 // IForestItem
