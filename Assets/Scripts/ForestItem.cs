@@ -65,21 +65,45 @@ public class ForestItem : MonoBehaviour, IForestItem {
 			return;
 		bSelected = true;
 
-        SetColor(Color.red);
+        if ( ItemType == ForestItemEnum.eFruit)
+        {
+            SetColor(Color.red, transform.parent.gameObject);
+        }
+        else 
+            SetColor(Color.red);
 
 		Village.GetGlobalInstance ().OrderCaptureItem (this);
 	}
 
 	public void Unselect()
     {
-        SetColor(Color.white);
+        if ( ItemType == ForestItemEnum.eFruit)
+        {
+            SetColor(Color.white, transform.parent.gameObject);
+        }
+        else 
+            SetColor(Color.white);
         bSelected = false;
 		transform.rotation = Quaternion.identity;
 	}
 
     void SetColor(Color c)
     {
+        SetColor(c, null);
+    }
+    void SetColor(Color c, GameObject obj)
+    {
+
         SpriteRenderer render = GetComponentInChildren<SpriteRenderer>();
+        if ( obj != null)
+        {
+            SpriteRenderer pRend = transform.parent.GetComponent<SpriteRenderer>();
+            if ( pRend != null)
+            {
+                Debug.Log(" Color change " + pRend.name);
+                render = pRend;
+            }
+        }
         render.color = c;
     }
 
