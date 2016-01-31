@@ -15,7 +15,7 @@ public class ThunderStorm : MonoBehaviour, IThunderStorm {
 	public GameObject villageFruitsContainer;
 	public GameObject villageAnimalsContainer;
     AudioSource sfx;
-    public AudioClip thunderSFX;
+    public AudioClip[] thunderSFX;
 
 // MonoBehaviour
 //
@@ -34,7 +34,7 @@ public class ThunderStorm : MonoBehaviour, IThunderStorm {
     void FireThunder()
     {
         KillPeons(1);
-        sfx.PlayOneShot(thunderSFX);
+        sfx.PlayOneShot(thunderSFX[Random.Range(0,thunderSFX.Length)]);
     }
 
 	void Awake() {
