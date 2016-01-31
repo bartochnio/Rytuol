@@ -4,7 +4,8 @@ public enum VillageItemEnum
 {
 	eSavage,
 	eFruit,
-	eAnimal
+	eAnimal,
+    eSelfSacrifice
 }
 
 public interface IVillageItem {
@@ -27,6 +28,7 @@ public interface IPeon {
 	void RetrieveVillageItem(IVillageItem item);
 
 	void Sacrifice (Temple temple, Vector3 templeLocation);
+    void SelfSacrifice(int queueSlot);
 
 	VillageItemEnum ItemToSacrifice { get; }
 
@@ -41,7 +43,9 @@ public interface IStorageArea {
 
 public interface IPeonsArea {
 	Vector3 AnyLocation { get; }
+    void RequestSelfSacrifice();
 }
+
 
 public interface IVillage {
 	IPeonsArea PeonsArea { get; }

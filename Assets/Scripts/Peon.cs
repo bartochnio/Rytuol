@@ -111,6 +111,7 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 
 
 // private functions
+
 	void OnIdle()
 	{
 	}
@@ -181,9 +182,19 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 	}
 
 	void FinishSacrifice() {
-        targetTemple.ReciveSacrifice(ItemToSacrifice);
-		Payload.HidePayload();
-		MoveToPeonsArea();
+        Debug.Log(" Finishing Sacrifice " + ItemToSacrifice);
+        if (ItemToSacrifice == VillageItemEnum.eSelfSacrifice)
+        {
+            targetTemple.ReciveSacrifice(VillageItemEnum.eSavage);
+            actionState = State.eIdle;
+            Kill();
+        }
+        else
+        {
+            targetTemple.ReciveSacrifice(ItemToSacrifice);
+            Payload.HidePayload();
+            MoveToPeonsArea();
+        }
 	}
     
 
@@ -302,6 +313,7 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 		mTarget = null;
 	}
 
+
 	public void SeekVillageItem(IVillageItem item, int queueSlot)
 	{
 		mTarget = ((VillageItem)item).transform;
@@ -341,6 +353,14 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 		MoveToPoint(templeLocation);
 	}
 
+    public void SelfSacrifice( int queueSlot)
+    {
+        actionState = State.eQueueingItem;
+        payLoadVillageItem = VillageItemEnum.eSelfSacrifice;
+        Payload.ShowPayload(VillageItemEnum.eSelfSacrifice);
+        mQueueSlot = queueSlot;
+		MoveToPoint(SacrificeQueue.GetInstance().GetSlotPos(mQueueSlot));
+    }
 	public VillageItemEnum ItemToSacrifice {
 		get { return payLoadVillageItem; }
 	}

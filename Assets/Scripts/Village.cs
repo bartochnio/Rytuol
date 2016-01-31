@@ -145,6 +145,19 @@ public class Village : MonoBehaviour, IVillage {
         }
     }
 
+    public void OrderSelfSacrifice (int queueSlot)
+    {
+        IPeon p = PopPeon();
+        if ( p != null )
+        {
+            p.SelfSacrifice( queueSlot );
+        }
+        else
+        {
+            SacrificeQueue.GetInstance().FreeSlot(queueSlot);
+        }
+    }
+
 	public bool IsPeonRegistered(IPeon peon) {
 		return (peons.Find (x => x == peon) != null);
 	}
