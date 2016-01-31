@@ -24,9 +24,11 @@ public class Village : MonoBehaviour, IVillage {
 	public GameObject peonPrefab;
 	public GameObject spawnPoint;
 
+    public int startingPeonCount = 10;
 
 // private vars
 	float spawnWaitTime = 3.0f;
+    
 
 	List<IPeon> peons = new List<IPeon>();
 
@@ -36,6 +38,14 @@ public class Village : MonoBehaviour, IVillage {
     void Awake () {
 		Village.globalInstance = this;
 	}
+
+    void Start()
+    {
+        for(int i = 0; i < startingPeonCount; ++i)
+        {
+            SpawnPeon(spawnPoint.transform.position);
+        }
+    }
 
 	void Update () {
 		spawnWaitTime += Time.deltaTime;
