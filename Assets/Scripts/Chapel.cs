@@ -24,4 +24,10 @@ public class Chapel : MonoBehaviour
         if (savage != null)
             Village.GetGlobalInstance().OrderConvertSavage(savage);
     }
+
+    public Vector2 GetEntrace()
+    {
+        Vector2 pos = transform.GetChild(0).position;
+        return pos;
+    }
 }

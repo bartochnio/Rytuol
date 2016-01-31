@@ -427,7 +427,7 @@ public class Peon : MonoBehaviour, IMovable, IPeon
         GameObject.Destroy((item as VillageItem).gameObject);
 
         actionState = State.eConvertSavage;
-        MoveToPoint(Chapel.GetInstance().transform.position);
+        MoveToPoint(Chapel.GetInstance().GetEntrace());
     }
 
     public void SeekVillageItem(IVillageItem item, int queueSlot)
