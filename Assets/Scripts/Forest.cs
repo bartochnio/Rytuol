@@ -24,8 +24,6 @@ public class Forest : MonoBehaviour, IForest {
 
 // private vars
 	float spawnWaitTime = 0.0f;
-	int savagesCount = 0;
-	int animalsCount = 0;
 
 
 // MonoBehaviour
@@ -42,22 +40,14 @@ public class Forest : MonoBehaviour, IForest {
 			int chance = Random.Range (0, 1000) % 4;
 			switch (chance) {
 			case 0: {
-					if (savagesCount < 10) {
-						++savagesCount;
-
-						GameObject GO = GameObject.Instantiate (savagePrefab, AnyLocation, Quaternion.identity) as GameObject;
-						GO.transform.parent = itemsArea.transform;//Forest.GetGlobalInstance ().transform;
-					}
+					GameObject GO = GameObject.Instantiate (savagePrefab, AnyLocation, Quaternion.identity) as GameObject;
+					GO.transform.parent = itemsArea.transform;//Forest.GetGlobalInstance ().transform;
 				}
 				break;
 
 			case 1: {
-					if (animalsCount < 10) {
-						++animalsCount;
-
-						GameObject GO = GameObject.Instantiate (animalPrefab, AnyLocation, Quaternion.identity) as GameObject;
-						GO.transform.parent = itemsArea.transform; //Forest.GetGlobalInstance ().transform;
-					}
+					GameObject GO = GameObject.Instantiate (animalPrefab, AnyLocation, Quaternion.identity) as GameObject;
+					GO.transform.parent = itemsArea.transform; //Forest.GetGlobalInstance ().transform;
 				}
 				break;
 			}
