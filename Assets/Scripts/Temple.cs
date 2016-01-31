@@ -6,10 +6,15 @@ public class Temple : MonoBehaviour
     public float reduceSacrificeValue = 0.5f;
     public float sacrificeFullValue = 0.3f;
 
-    public float belowValDuration = 5.0f;
-    public float eventStartVal = 0.0f;
+    public string bonusEvent;
+    public string punishmentEvent;
+
+    public float belowStartVal = 0.0f;
+    public float aboveStartVal = 1.0f;
+
     public float eventDelayTime = 10.0f;
-    public string randomEvent;
+    public float valDuration = 5.0f;
+
     private float counter = 0;
     private float timeSinceLastRandomEvent = 0.0f;
 
@@ -51,16 +56,28 @@ public class Temple : MonoBehaviour
 
     void Update()
     {
-        if (randomEvent.Length > 0 && (Time.time - timeSinceLastRandomEvent) > eventDelayTime)
+        if ((Time.time - timeSinceLastRandomEvent) > eventDelayTime || Mathf.Abs(timeSinceLastRandomEvent) < 0.0001f)
         {
-            if (sMeter.GetCurrentValue() < eventStartVal)
+            float meterVal = sMeter.GetCurrentValue();
+            if (meterVal < belowStartVal)
             {
-                SetColor(Color.red);
+                //SetColor(Color.red);
 
                 counter += Time.deltaTime;
-                if (counter >= belowValDuration)
+                if (counter >= valDuration)
                 {
-                    Messenger.Invoke(randomEvent);
+                    Messenger.Invoke(punishmentEvent);
+                    timeSinceLastRandomEvent = Time.time;
+                }
+            }
+            else if(meterVal > aboveStartVal)
+            {
+                //SetColor(Color.green);
+
+                counter += Time.deltaTime;
+                if (counter >= valDuration)
+                {
+                    Messenger.Invoke(bonusEvent);
                     timeSinceLastRandomEvent = Time.time;
                 }
             }
