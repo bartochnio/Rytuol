@@ -8,7 +8,7 @@ public class Critter : MonoBehaviour, IMovable, IForestItem
     public ForestItemEnum itemType;
     public AudioSource sfx;
     public AudioClip click;
-
+    GameObject smoke;
     // private vars
     bool bSelected;
 
@@ -82,6 +82,7 @@ public class Critter : MonoBehaviour, IMovable, IForestItem
         mSteering.SetPath(mPath, false);
         if (sfx == null)
             sfx = GameObject.Find("Audio/AudioSFX").GetComponent<AudioSource>();
+        smoke = Resources.Load("smoke") as GameObject;
         //INTERNAL
         //mSteering.SetFlag(Behavior.separation);
         //mSteering.SetFlag(Behavior.alignment);
@@ -155,6 +156,7 @@ public class Critter : MonoBehaviour, IMovable, IForestItem
 	}
 
 	public void Kill() {
+        GameObject.Instantiate(smoke);
 		GameObject.Destroy (gameObject);
 	}
 }
