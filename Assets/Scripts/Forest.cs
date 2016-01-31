@@ -14,7 +14,8 @@ public class Forest : MonoBehaviour, IForest {
 	public GameObject fruitPrefab;
 	public GameObject animalPrefab;
 
-	public float spawnDelay = 1.0f;
+	public float savageSpawnDelay = 1.0f;
+	public float animalSpawnDelay = 1.0f;
 
 	public GameObject forestArea;
 	public GameObject[] additionalForestAreas;
@@ -23,33 +24,39 @@ public class Forest : MonoBehaviour, IForest {
 
 
 // private vars
-	float spawnWaitTime = 0.0f;
+	float savageSpawnWaitTime = 0.0f;
+	float animalSpawnWaitTime = 0.0f;
 
 
 // MonoBehaviour
 //
 	void Awake () {
 		Forest.globalInstance = this;
+
+		savageSpawnWaitTime = Random.Range (0.0f, savageSpawnDelay);
+		animalSpawnWaitTime = Random.Range (0.0f, animalSpawnDelay);
 	}
 
 	void Update () {
-		spawnWaitTime += Time.deltaTime;
-		if (spawnWaitTime > spawnDelay) {
-			spawnWaitTime = 0.0f;
+		savageSpawnWaitTime += Time.deltaTime;
+		if (savageSpawnWaitTime > savageSpawnDelay) {
+			savageSpawnWaitTime = 0.0f;
 
-			int chance = Random.Range (0, 1000) % 4;
-			switch (chance) {
-			case 0: {
-					GameObject GO = GameObject.Instantiate (savagePrefab, AnyLocation, Quaternion.identity) as GameObject;
-					GO.transform.parent = itemsArea.transform;//Forest.GetGlobalInstance ().transform;
-				}
-				break;
+			int chance = Random.Range (0, 1000) % 2;
+			if (chance == 0) {
+				GameObject GO = GameObject.Instantiate (savagePrefab, AnyLocation, Quaternion.identity) as GameObject;
+				GO.transform.parent = itemsArea.transform;//Forest.GetGlobalInstance ().transform;
+			}
+		}
 
-			case 1: {
-					GameObject GO = GameObject.Instantiate (animalPrefab, AnyLocation, Quaternion.identity) as GameObject;
-					GO.transform.parent = itemsArea.transform; //Forest.GetGlobalInstance ().transform;
-				}
-				break;
+		animalSpawnWaitTime += Time.deltaTime;
+		if (animalSpawnWaitTime > animalSpawnDelay) {
+			animalSpawnWaitTime = 0.0f;
+
+			int chance = Random.Range (0, 1000) % 2;
+			if (chance == 0) {
+				GameObject GO = GameObject.Instantiate (animalPrefab, AnyLocation, Quaternion.identity) as GameObject;
+				GO.transform.parent = itemsArea.transform; //Forest.GetGlobalInstance ().transform;
 			}
 		}
 	}
