@@ -39,7 +39,7 @@ public class Menu : MonoBehaviour {
 
     public void StartButton()
     {
-        Application.LoadLevel("VilageProto_v2");
+        Application.LoadLevel("Village_Main");
         sfx.PlayOneShot(click);
     }
 
