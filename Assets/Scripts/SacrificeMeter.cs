@@ -14,13 +14,14 @@ public class SacrificeMeter : MonoBehaviour
     public float increaseRate = 0.3f;
 
     public float desiredValue;
-
+    bool warning = false; 
     bool boost = false;
 
     void Start ()
     {
         currentValue = startValue;
         fillerImage.fillAmount = startValue;
+        fillerImage.color = Color.grey;
     }
     // Uses Percents
     public void BoostByValue(float value)
@@ -50,7 +51,17 @@ public class SacrificeMeter : MonoBehaviour
         BoostByValue(0.3f);
     }
     */
-	
+
+    public IEnumerator Warning()
+    {
+        while (warning) { 
+            fillerImage.color = Color.red;
+            yield return new WaitForSeconds(0.20f);
+            fillerImage.color = Color.grey;
+            yield return new WaitForSeconds(0.20f);
+        }
+    }
+
 	// Update is called once per frame
 	void Update () 
     {
@@ -70,6 +81,20 @@ public class SacrificeMeter : MonoBehaviour
         else
         {
             currentValue = Mathf.MoveTowards(currentValue, 0, decreaseRate * Time.deltaTime); 
+        }
+        if (currentValue < 0.3f && !warning)
+        {
+            warning = true;
+            StartCoroutine("Warning");
+            
+
+        }
+
+        if (currentValue > 0.3f)
+        {
+            warning = false;
+            StopCoroutine("Warning");
+            fillerImage.color = Color.grey;
         }
 
         SetSprite(currentValue);
