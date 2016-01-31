@@ -16,7 +16,7 @@ public class SacrificeMeter : MonoBehaviour
     public float desiredValue;
     bool warning = false; 
     bool boost = false;
-
+    public Color bloodColor;
     void Start ()
     {
         currentValue = startValue;
@@ -54,10 +54,10 @@ public class SacrificeMeter : MonoBehaviour
 
     public IEnumerator Warning()
     {
-        while (warning) { 
-            fillerImage.color = Color.red;
+        while (warning) {
+            fillerImage.color = bloodColor;
             yield return new WaitForSeconds(0.20f);
-            fillerImage.color = Color.grey;
+            fillerImage.color = Color.white;
             yield return new WaitForSeconds(0.20f);
         }
     }
@@ -94,7 +94,7 @@ public class SacrificeMeter : MonoBehaviour
         {
             warning = false;
             StopCoroutine("Warning");
-            fillerImage.color = Color.grey;
+            fillerImage.color = bloodColor;
         }
 
         SetSprite(currentValue);

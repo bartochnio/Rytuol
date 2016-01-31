@@ -8,12 +8,11 @@ public class Menu : MonoBehaviour {
     public GameObject tutorialStartup;
     public Canvas tutorial;
     public Canvas main;
-   public  int currentTut;
+    public  int currentTut;
     public Text[] texts;
-    public Image[] alphas;
     public AudioSource sfx;
     public AudioClip click;
-
+    public Text tutcounter; 
 
     void Start()
     {
@@ -27,13 +26,12 @@ public class Menu : MonoBehaviour {
     void ShowTutorial()
     {
         texts[currentTut].enabled = true;
-        alphas[currentTut].enabled = true; 
+        tutcounter.text = "" + (currentTut+1).ToString() + "/4";
     }
 
     void HideTutorials()
     {
-        foreach (Image i in alphas)
-            i.enabled = false;
+   
         foreach (Text t in texts)
             t.enabled = false;
     }
@@ -66,6 +64,7 @@ public class Menu : MonoBehaviour {
     public void NextTutorial()
     {
         currentTut++;
+        
         sfx.PlayOneShot(click);
         if (currentTut >= texts.Length )
             currentTut = 0;
@@ -76,6 +75,7 @@ public class Menu : MonoBehaviour {
     public void PreviousTutorial()
     {
         currentTut--;
+       
         sfx.PlayOneShot(click);
         if (currentTut < 0)
             currentTut = texts.Length -1;
