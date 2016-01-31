@@ -194,9 +194,9 @@ public class Peon : MonoBehaviour, IMovable, IPeon
         }
         else
         {
-            targetTemple.ReciveSacrifice(ItemToSacrifice);
             Payload.HidePayload();
             MoveToPeonsArea();
+            targetTemple.ReciveSacrifice(ItemToSacrifice);
         }
 	}
     
