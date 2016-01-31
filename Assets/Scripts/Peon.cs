@@ -12,7 +12,7 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 
 //IMovable
     public Vector3 velocity { get; set; }
-    public float maxSpeed { get { return MaxSpeed; } }
+    public float maxSpeed { get { return MaxSpeed; } set { MaxSpeed = value; } }
     public Vector3 position { get { return transform.position; } set { transform.position = value; } }
     public float speed { get { return velocity.magnitude; } }
     public Vector3 heading { get { return (velocity.sqrMagnitude > 0.001f) ? velocity.normalized : Vector3.zero; } }
@@ -49,6 +49,26 @@ public class Peon : MonoBehaviour, IMovable, IPeon
     }
     State actionState = State.eIdle;
 
+
+    void OnEnable()
+    {
+        Messenger.AddListener("speedBoost", SpeedBoost);
+    }
+
+    void OnDisable()
+    {
+        Messenger.RemoveListener("speedBoost", SpeedBoost);
+    }
+
+    float counter = 0.0f;
+    float prevMaxSpeed;
+    bool mSpeedBoost = false;
+    void SpeedBoost()
+    {
+        prevMaxSpeed = maxSpeed;
+        maxSpeed = 4.0f;
+        mSpeedBoost = true;
+    }
 
 // MonoBehaviour
 //
@@ -109,6 +129,17 @@ public class Peon : MonoBehaviour, IMovable, IPeon
         //{
         //    Debug.DrawLine(mPath[i].pos, mPath[i + 1].pos, Color.red);
         //}
+
+        if (mSpeedBoost)
+        {
+            counter += Time.deltaTime;
+            if (counter >= 5.0f)
+            {
+                maxSpeed = prevMaxSpeed;
+                mSpeedBoost = false;
+                counter = 0.0f;
+            }
+        }
     }
 
 
