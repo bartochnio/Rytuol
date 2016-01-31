@@ -118,7 +118,7 @@ public class Critter : MonoBehaviour, IMovable, IForestItem
 
         if (mSteering.IsPathFinished())
         {
-            Vector2 target = Forest.GetGlobalInstance().AnyLocation;
+            Vector2 target = Forest.GetGlobalInstance().AnyLocation2;
             mSteering.SetTarget(target);
             mPath = AStar.GetInstance().FindPath(transform.position, target);
             mSteering.SetPath(mPath, false);

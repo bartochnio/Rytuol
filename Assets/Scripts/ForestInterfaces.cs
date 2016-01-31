@@ -24,5 +24,6 @@ public interface IForestItem {
 
 
 public interface IForest {
-	IForestItem FindItem (ForestItemEnum itmType);
+	Vector3 AnyLocation { get; }
+	Vector3 AnyLocation2 { get; }
 }
