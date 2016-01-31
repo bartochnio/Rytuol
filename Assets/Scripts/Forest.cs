@@ -16,7 +16,7 @@ public class Forest : MonoBehaviour, IForest {
 
 	public float spawnDelay = 1.0f;
 
-	public GameObject forestArea;	
+	public GameObject[] forestArea;	
 	public GameObject itemsArea;
 
 
@@ -109,11 +109,34 @@ public class Forest : MonoBehaviour, IForest {
 
 	public Vector3 AnyLocation {
 		get {
-			var renderer = forestArea.GetComponentInChildren<BoxCollider2D> ();
+			var renderer = forestArea[0].GetComponentInChildren<BoxCollider2D> ();
+
 			var bounds = renderer.bounds;
 			Vector3 minPt = bounds.min;
 			Vector3 maxPt = bounds.max;
-			return new Vector3( Random.Range(minPt.x, maxPt.x), Random.Range(minPt.y, maxPt.y), 0.0f  );
+
+			Vector2 size = renderer.size;
+			Vector2 randomPoint = new Vector2(Random.Range(-size.x / 2.0f, size.x / 2.0f), Random.Range(-size.y / 2.0f, size.y / 2.0f));
+			randomPoint = forestArea[0].transform.TransformPoint(randomPoint);
+
+			return randomPoint;
+		}
+	}
+
+	public Vector3 AnyLocation2 {
+		get {
+			int idx = Random.Range (0, 100) % forestArea.Length;
+			var renderer = forestArea[idx].GetComponentInChildren<BoxCollider2D> ();
+
+			var bounds = renderer.bounds;
+			Vector3 minPt = bounds.min;
+			Vector3 maxPt = bounds.max;
+
+			Vector2 size = renderer.size;
+			Vector2 randomPoint = new Vector2(Random.Range(-size.x / 2.0f, size.x / 2.0f), Random.Range(-size.y / 2.0f, size.y / 2.0f));
+			randomPoint = forestArea[idx].transform.TransformPoint(randomPoint);
+
+			return randomPoint;
 		}
 	}
 }
