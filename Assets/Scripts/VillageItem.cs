@@ -18,14 +18,6 @@ public class VillageItem : MonoBehaviour, IVillageItem {
 		//}
 	}
 
-  
-
-	void OnMouseDown() {
-		Select ();
-	}
-
-
-
 // IVillageItem
 //
 	public VillageItemEnum ItemType {
