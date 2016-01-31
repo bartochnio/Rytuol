@@ -180,7 +180,7 @@ public class Peon : MonoBehaviour, IMovable, IPeon
             Payload.HidePayload();
             MoveToPeonsArea();
 
-            Village.GetGlobalInstance().SpawnPeon(transform.position);
+            Chapel.GetInstance().Indoctrinate();
         }
 
         Locomotion();
