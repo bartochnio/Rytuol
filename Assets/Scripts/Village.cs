@@ -43,18 +43,23 @@ public class Village : MonoBehaviour, IVillage {
 			spawnWaitTime = 0.0f;
 
 			if (peons.Count < 3) {
-				GameObject peonGO = GameObject.Instantiate (peonPrefab, spawnPoint.transform.position, Quaternion.identity) as GameObject;
-				peonGO.transform.parent = spawnPoint.transform;//Village.GetGlobalInstance ().transform;
-
-				IPeon peonItem = peonGO.GetComponent<Peon> ();
-				if (peonItem != null)
-                {
-					peonItem.MoveToPeonsArea();
-				}
+                SpawnPeon(spawnPoint.transform.position);
 			}
 		}
 	}
 
+
+    public void SpawnPeon(Vector2 pos)
+    {
+        GameObject peonGO = GameObject.Instantiate(peonPrefab, pos, Quaternion.identity) as GameObject;
+        peonGO.transform.parent = spawnPoint.transform;//Village.GetGlobalInstance ().transform;
+
+        IPeon peonItem = peonGO.GetComponent<Peon>();
+        if (peonItem != null)
+        {
+            peonItem.MoveToPeonsArea();
+        }
+    }
 
 // public functions
     IPeon PopPeon()
@@ -159,6 +164,14 @@ public class Village : MonoBehaviour, IVillage {
             item.Unselect();
             SacrificeQueue.GetInstance().FreeSlot(queueSlot);
         }
+    }
+
+    public void OrderConvertSavage(IVillageItem item)
+    {
+        IPeon p = PopPeon();
+
+        if (p != null)
+            p.SeekSavageToConvert(item);
     }
 
     public void OrderSelfSacrifice (int queueSlot)

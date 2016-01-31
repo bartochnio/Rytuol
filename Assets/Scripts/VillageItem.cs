@@ -60,6 +60,11 @@ public class VillageItem : MonoBehaviour, IVillageItem {
 		Village.GetGlobalInstance().OrderSacrificeItem(this,queueSlot);
     }
 
+    public void SelectToConvert( object caller )
+    {
+
+    }
+
 	public void Unselect() {
 		bSelected = false;
 		transform.rotation = Quaternion.identity;

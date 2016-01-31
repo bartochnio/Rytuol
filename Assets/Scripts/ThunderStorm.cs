@@ -56,7 +56,7 @@ public class ThunderStorm : MonoBehaviour, IThunderStorm {
 			int idx = Random.Range (0, nPeons);
 			var peon = peons [idx];
 
-			if (peon.IsSafeToKill) {
+			if (peon.IsSafeToKill()) {
 				++nPeonsKilled;
 
 				peon.Kill ();

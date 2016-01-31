@@ -47,7 +47,7 @@ public class StorageArea : MonoBehaviour, IStorageArea {
         }
     }
 
-    VillageItem PopItemFromStorage()
+    public VillageItem PopItemFromStorage()
     {
         VillageItem item = null;
         if (itemsList.Count > 0)

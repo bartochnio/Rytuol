@@ -45,7 +45,10 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 
         eQueueingItem,
 
-		eOfferingItem
+		eOfferingItem,
+
+        eGetSavageForConversion,
+        eConvertSavage
     }
     State actionState = State.eIdle;
 
@@ -123,7 +126,16 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 			case State.eOfferingItem:
 				OnOffering();
 			break;
-		}
+
+            case State.eGetSavageForConversion:
+                OnConversion();
+                break;
+
+            case State.eConvertSavage:
+                OnChapel();
+                break;
+
+        }
 
         //for (int i = 0; i < mPath.Count - 1; ++i)
         //{
@@ -156,6 +168,24 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 		Locomotion();
 	}
 		
+    void OnConversion()
+    {
+        Locomotion();
+    }
+
+    void OnChapel()
+    {
+        if (mSteering.IsPathFinished())
+        {
+            Payload.HidePayload();
+            MoveToPeonsArea();
+
+            Village.GetGlobalInstance().SpawnPeon(transform.position);
+        }
+
+        Locomotion();
+    }
+
     void OnMove()
     {
         if(mSteering.IsPathFinished())
@@ -289,8 +319,16 @@ public class Peon : MonoBehaviour, IMovable, IPeon
             else
             {
                 var villageItem = mTarget.GetComponent<IVillageItem>();
-                this.RetrieveVillageItem(villageItem);
                 villageItem.Unselect();
+
+                if (actionState == State.eGetSavageForConversion)
+                {
+                    this.RetrieveSavage(villageItem);
+                }
+                else
+                {         
+                    this.RetrieveVillageItem(villageItem);   
+                }
             }
         }
 
@@ -379,12 +417,20 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 		Payload.ShowPayload(item.ItemType);
 
 		MoveToPoint(SacrificeQueue.GetInstance().GetSlotPos(mQueueSlot));
-		GameObject.Destroy((item as VillageItem).gameObject);
+		
 		mTarget = null;
 	}
 
+    public void RetrieveSavage(IVillageItem item)
+    {
+        Payload.ShowPayload(VillageItemEnum.eSavage);
+        GameObject.Destroy((item as VillageItem).gameObject);
 
-	public void SeekVillageItem(IVillageItem item, int queueSlot)
+        actionState = State.eConvertSavage;
+        MoveToPoint(Chapel.GetInstance().transform.position);
+    }
+
+    public void SeekVillageItem(IVillageItem item, int queueSlot)
 	{
 		mTarget = ((VillageItem)item).transform;
 		mQueueSlot = queueSlot;
@@ -393,6 +439,13 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 
 		MoveToPoint(mTarget.position);
 	}
+
+    public void SeekSavageToConvert(IVillageItem item)
+    {
+        mTarget = ((VillageItem)item).transform;
+        actionState = State.eGetSavageForConversion;
+        MoveToPoint(mTarget.position);
+    }
 
 	public void SeekForestItem(IForestItem item)
 	{
@@ -435,10 +488,9 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 		get { return payLoadVillageItem; }
 	}
 
-	public bool IsSafeToKill {
-		get {
-			return mQueueSlot == -1;
-		}
+	public bool IsSafeToKill()
+    {
+	    return actionState == State.eIdle;	
 	}
 
 	public void Kill() {

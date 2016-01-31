@@ -28,12 +28,14 @@ public interface IPeon {
 	void SeekVillageItem(IVillageItem item, int queueSlot);
 	void RetrieveVillageItem(IVillageItem item);
 
-	void Sacrifice (Temple temple, Vector3 templeLocation);
+    void SeekSavageToConvert(IVillageItem item);
+
+    void Sacrifice (Temple temple, Vector3 templeLocation);
     void SelfSacrifice(int queueSlot);
 
 	VillageItemEnum ItemToSacrifice { get; }
 
-	bool IsSafeToKill { get; }
+    bool IsSafeToKill();
 	void Kill();
 }
 
