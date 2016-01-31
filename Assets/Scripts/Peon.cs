@@ -417,8 +417,8 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 		Payload.ShowPayload(item.ItemType);
 
 		MoveToPoint(SacrificeQueue.GetInstance().GetSlotPos(mQueueSlot));
-		
-		mTarget = null;
+        GameObject.Destroy((item as VillageItem).gameObject);
+        mTarget = null;
 	}
 
     public void RetrieveSavage(IVillageItem item)
@@ -490,7 +490,7 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 
 	public bool IsSafeToKill()
     {
-	    return actionState == State.eIdle || mQueueSlot == -1;	
+	    return actionState == State.eIdle && mQueueSlot == -1;	
 	}
 
 	public void Kill() {
