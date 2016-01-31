@@ -15,7 +15,10 @@ public class Forest : MonoBehaviour, IForest {
 	public GameObject animalPrefab;
 
 	public float savageSpawnDelay = 1.0f;
+	public int savageMaxCount = 20;
+
 	public float animalSpawnDelay = 1.0f;
+	public int animalMaxCount = 20;
 
 	public GameObject forestArea;
 	public GameObject[] additionalForestAreas;
@@ -26,6 +29,9 @@ public class Forest : MonoBehaviour, IForest {
 // private vars
 	float savageSpawnWaitTime = 0.0f;
 	float animalSpawnWaitTime = 0.0f;
+
+	int savageCount = 0;
+	int animalCount = 0;
 
 
 // MonoBehaviour
@@ -42,10 +48,15 @@ public class Forest : MonoBehaviour, IForest {
 		if (savageSpawnWaitTime > savageSpawnDelay) {
 			savageSpawnWaitTime = 0.0f;
 
-			int chance = Random.Range (0, 1000) % 2;
-			if (chance == 0) {
-				GameObject GO = GameObject.Instantiate (savagePrefab, AnyLocation, Quaternion.identity) as GameObject;
-				GO.transform.parent = itemsArea.transform;//Forest.GetGlobalInstance ().transform;
+			if (savageCount < savageMaxCount) {
+
+				int chance = Random.Range (0, 1000) % 2;
+				if (chance == 0) {
+					GameObject GO = GameObject.Instantiate (savagePrefab, AnyLocation, Quaternion.identity) as GameObject;
+					GO.transform.parent = itemsArea.transform;//Forest.GetGlobalInstance ().transform;
+
+					++savageCount;
+				}
 			}
 		}
 
@@ -53,10 +64,15 @@ public class Forest : MonoBehaviour, IForest {
 		if (animalSpawnWaitTime > animalSpawnDelay) {
 			animalSpawnWaitTime = 0.0f;
 
-			int chance = Random.Range (0, 1000) % 2;
-			if (chance == 0) {
-				GameObject GO = GameObject.Instantiate (animalPrefab, AnyLocation, Quaternion.identity) as GameObject;
-				GO.transform.parent = itemsArea.transform; //Forest.GetGlobalInstance ().transform;
+			if (animalCount < animalMaxCount) {
+
+				int chance = Random.Range (0, 1000) % 2;
+				if (chance == 0) {
+					GameObject GO = GameObject.Instantiate (animalPrefab, AnyLocation, Quaternion.identity) as GameObject;
+					GO.transform.parent = itemsArea.transform; //Forest.GetGlobalInstance ().transform;
+
+					++animalCount;
+				}
 			}
 		}
 	}
@@ -65,6 +81,14 @@ public class Forest : MonoBehaviour, IForest {
 
 // IForest
 //
+	public void OnAnimalTamed() {
+		--animalCount;
+	}
+
+	public void OnSavageCaptured() {
+		--savageCount;
+	}
+
 	public Vector3 AnyLocation {
 		get {
 			var collider = forestArea.GetComponentInChildren<BoxCollider2D> ();

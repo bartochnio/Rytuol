@@ -378,14 +378,18 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 			break;
 
 		case ForestItemEnum.eAnimal:
-			MoveToPoint(Village.GetGlobalInstance().AnimalsArea.AnyLocation);
-			Payload.ShowPayload(VillageItemEnum.eAnimal);
-			GameObject.Destroy((item as Critter).gameObject);
+			MoveToPoint (Village.GetGlobalInstance ().AnimalsArea.AnyLocation);
+			Payload.ShowPayload (VillageItemEnum.eAnimal);
+
+			Forest.GetGlobalInstance ().OnAnimalTamed ();
+			GameObject.Destroy ((item as Critter).gameObject);
 			break;
 
 		case ForestItemEnum.eSavage:
 			MoveToPoint(Village.GetGlobalInstance().SavagesArea.AnyLocation);
 			Payload.ShowPayload(VillageItemEnum.eSavage);
+
+			Forest.GetGlobalInstance ().OnSavageCaptured ();
 			GameObject.Destroy((item as Critter).gameObject);
 			break;
 		}

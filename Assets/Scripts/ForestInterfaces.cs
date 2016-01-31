@@ -26,4 +26,7 @@ public interface IForestItem {
 public interface IForest {
 	Vector3 AnyLocation { get; }
 	Vector3 AnyLocation2 { get; }
+
+	void OnAnimalTamed();
+	void OnSavageCaptured();
 }
