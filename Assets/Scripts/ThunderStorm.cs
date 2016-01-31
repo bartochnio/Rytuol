@@ -17,6 +17,7 @@ public class ThunderStorm : MonoBehaviour, IThunderStorm {
     AudioSource sfx;
     public AudioClip[] thunderSFX;
 
+
 // MonoBehaviour
 //
     void OnEnable()
@@ -34,7 +35,7 @@ public class ThunderStorm : MonoBehaviour, IThunderStorm {
     void FireThunder()
     {
         KillPeons(1);
-        sfx.PlayOneShot(thunderSFX[Random.Range(0,thunderSFX.Length)]);
+        sfx.PlayOneShot(thunderSFX[Random.Range(0, thunderSFX.Length)]);
     }
 
 	void Awake() {

@@ -508,7 +508,9 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 		if (actionState == State.eIdle) {
 			Village.GetGlobalInstance ().UnregisterPeon (this); // unregister itself if waiting in peons area
 		}
-
-		GameObject.Destroy (gameObject);
+        GameObject.Find("ThunderStorm").transform.position = this.gameObject.transform.position;
+        GameObject.Find("ThunderStorm").GetComponent<Animator>().Play("Thunder");
+        GameObject.Find("Background").GetComponent<Animator>().Play("Thunder");
+        GameObject.Destroy (gameObject);
 	}
 }
