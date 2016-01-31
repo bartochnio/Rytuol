@@ -5,13 +5,15 @@ public class ForestItem : MonoBehaviour, IForestItem {
 // public vars
 	public ForestItemEnum itemType;
 
-    public float respawnDelay = 2.0f;
+    public float minRespawn = 0.5f;
+    public float maxRespawn = 5.0f;
     float counter = 0.0f;
     bool spawnApple = true;
 
 // private vars
 	bool bSelected;
 	bool bAppleExists = false;
+    float respawn = 0.0f;
 
     Animator appleAni;
 
@@ -34,12 +36,13 @@ public class ForestItem : MonoBehaviour, IForestItem {
 		bAppleExists = true;
 	}
 
-	public void ApplePicked()
+    public void ApplePicked()
     {
         bAppleExists = false;
         spawnApple = true;
         appleAni.speed = 0.0f;
         appleAni.Play("apple_in");
+        respawn = Random.Range(minRespawn, maxRespawn);
     }
 
 
@@ -95,6 +98,7 @@ public class ForestItem : MonoBehaviour, IForestItem {
         Apple apple = GetComponentInChildren<Apple>();
         appleAni = apple.GetComponent<Animator>();
         appleAni.speed = 0.0f;
+        respawn = Random.Range(minRespawn, maxRespawn);
     }
 
     public void Update()
@@ -102,7 +106,7 @@ public class ForestItem : MonoBehaviour, IForestItem {
         if(spawnApple)
         {
             counter += Time.deltaTime;
-            if (counter >= respawnDelay)
+            if (counter >= respawn)
             {
                 counter = 0.0f;
                 appleAni.speed = 1.0f;
