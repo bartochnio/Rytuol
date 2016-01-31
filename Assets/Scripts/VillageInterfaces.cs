@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public enum VillageItemEnum
 {
@@ -39,6 +40,7 @@ public interface IPeon {
 public interface IStorageArea {
 	VillageItemEnum ContainedItemType { get; }
 	Vector3 AnyLocation { get; }
+    List<VillageItem> itemsList { get; }
 }
 
 public interface IPeonsArea {
