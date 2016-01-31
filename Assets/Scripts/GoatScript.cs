@@ -18,19 +18,24 @@ public class GoatScript : MonoBehaviour {
 
     void Awake ()
     {
-        if (sfx == null)
-            sfx = GameObject.Find("Audio/AudioSFX").GetComponent<AudioSource>();
         crit = GetComponent<Critter>();
 
+        if (sfx == null)
+            sfx = GameObject.Find("Audio/AudioSFX").GetComponent<AudioSource>();
     }
 
 
     void Start () {
-        sfx.volume = Random.Range(0.8f, 1f);
-        sfx.pitch = Random.Range(0.75f, 1f);
-        int c = Random.Range(0, 50);
-        if (c > 25) 
-            sfx.PlayOneShot(beeeee);
+
+        if (sfx != null)
+        {
+            sfx.volume = Random.Range(0.8f, 1f);
+            sfx.pitch = Random.Range(0.75f, 1f);
+            int c = Random.Range(0, 50);
+            if (c > 25)
+                sfx.PlayOneShot(beeeee);
+        }
+
         smoke = Resources.Load("smoke") as GameObject;
         anim = GetComponent<Animator>();
 

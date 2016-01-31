@@ -16,9 +16,9 @@ public class Apple : MonoBehaviour {
 
     public void PlayPac()
     {
-        if (sfx == null)
-            sfx = GameObject.Find("Audio/AudioSFX").GetComponent<AudioSource>();
-        sfx.PlayOneShot(pac);
+        if (sfx != null)
+            sfx.PlayOneShot(pac);
+        //sfx = GameObject.Find("Audio/AudioSFX").GetComponent<AudioSource>();
     }
 
 

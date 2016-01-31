@@ -42,7 +42,10 @@ public class Critter : MonoBehaviour, IMovable, IForestItem
         bSelected = true;
 
         SetColor(Color.red);
-        sfx.PlayOneShot(sfx.clip);
+
+        if (sfx != null)
+            sfx.PlayOneShot(sfx.clip);
+
         Village.GetGlobalInstance().OrderCaptureItem(this);
     }
 
@@ -82,8 +85,7 @@ public class Critter : MonoBehaviour, IMovable, IForestItem
 
         mPath = AStar.GetInstance().FindPath(transform.position, target);
         mSteering.SetPath(mPath, false);
-        if (sfx == null)
-            sfx = GameObject.Find("Audio/AudioSFX").GetComponent<AudioSource>();
+
         smoke = Resources.Load("smoke") as GameObject;
         //INTERNAL
         //mSteering.SetFlag(Behavior.separation);
@@ -91,6 +93,9 @@ public class Critter : MonoBehaviour, IMovable, IForestItem
         //mSteering.SetFlag(Behavior.cohesion);
         mSteering.SetFlag(Behavior.followPath);
         //mSteering.SetFlag(Behavior.wander2d);
+
+        if (sfx == null)
+            sfx = GameObject.Find("Audio/AudioSFX").GetComponent<AudioSource>();
     }
 	
 	// Update is called once per frame
