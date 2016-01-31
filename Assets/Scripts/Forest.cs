@@ -16,9 +16,11 @@ public class Forest : MonoBehaviour, IForest {
 
 	public float savageSpawnDelay = 1.0f;
 	public int savageMaxCount = 20;
+	public int savageInitialCount = 5;
 
 	public float animalSpawnDelay = 1.0f;
 	public int animalMaxCount = 20;
+	public int animalInitialCount = 5;
 
 	public GameObject forestArea;
 	public GameObject[] additionalForestAreas;
@@ -43,6 +45,18 @@ public class Forest : MonoBehaviour, IForest {
 		animalSpawnWaitTime = Random.Range (0.0f, animalSpawnDelay);
 	}
 
+	void Start() {
+		for(int i = 0; i < savageInitialCount; ++i)
+		{
+			SpawnSavage ();
+		}
+
+		for(int i = 0; i < animalInitialCount; ++i)
+		{
+			SpawnAnimal ();
+		}
+	}
+
 	void Update () {
 		savageSpawnWaitTime += Time.deltaTime;
 		if (savageSpawnWaitTime > savageSpawnDelay) {
@@ -52,10 +66,7 @@ public class Forest : MonoBehaviour, IForest {
 
 				int chance = Random.Range (0, 1000) % 2;
 				if (chance == 0) {
-					GameObject GO = GameObject.Instantiate (savagePrefab, AnyLocation, Quaternion.identity) as GameObject;
-					GO.transform.parent = itemsArea.transform;//Forest.GetGlobalInstance ().transform;
-
-					++savageCount;
+					SpawnSavage ();
 				}
 			}
 		}
@@ -68,15 +79,27 @@ public class Forest : MonoBehaviour, IForest {
 
 				int chance = Random.Range (0, 1000) % 2;
 				if (chance == 0) {
-					GameObject GO = GameObject.Instantiate (animalPrefab, AnyLocation, Quaternion.identity) as GameObject;
-					GO.transform.parent = itemsArea.transform; //Forest.GetGlobalInstance ().transform;
-
-					++animalCount;
+					SpawnAnimal ();
 				}
 			}
 		}
 	}
 
+
+// private function
+	void SpawnAnimal() {
+		GameObject GO = GameObject.Instantiate (animalPrefab, AnyLocation, Quaternion.identity) as GameObject;
+		GO.transform.parent = itemsArea.transform; //Forest.GetGlobalInstance ().transform;
+
+		++animalCount;
+	}
+
+	void SpawnSavage() {
+		GameObject GO = GameObject.Instantiate (savagePrefab, AnyLocation, Quaternion.identity) as GameObject;
+		GO.transform.parent = itemsArea.transform;//Forest.GetGlobalInstance ().transform;
+
+		++savageCount;
+	}
 
 
 // IForest
