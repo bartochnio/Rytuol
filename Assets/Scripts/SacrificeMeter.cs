@@ -52,6 +52,11 @@ public class SacrificeMeter : MonoBehaviour
     }
     */
 
+    public float GetCurrentValue()
+    {
+        return currentValue;
+    }
+
     public IEnumerator Warning()
     {
         while (warning) {

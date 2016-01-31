@@ -18,6 +18,21 @@ public class ThunderStorm : MonoBehaviour, IThunderStorm {
 
 // MonoBehaviour
 //
+    void OnEnable()
+    {
+        Messenger.AddListener("thunder", FireThunder);
+    }
+
+    void OnDisable()
+    {
+        Messenger.RemoveListener("thunder", FireThunder);
+    }
+
+    void FireThunder()
+    {
+        KillPeons(1);
+    }
+
 	void Awake() {
 		ThunderStorm.globalInstance = this;
 	}
