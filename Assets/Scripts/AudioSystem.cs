@@ -6,7 +6,7 @@ public class AudioSystem : MonoBehaviour {
 
     public AudioClip[] drumzC;
     public AudioClip[] ambientC;
-    public AudioClip wpierdol; 
+    public AudioClip wpierdol;
 
     public AudioMixerSnapshot MenuToGame;
     public AudioMixerSnapshot GameToMenu;
@@ -17,22 +17,22 @@ public class AudioSystem : MonoBehaviour {
     public AudioSource ambient;
     public AudioSource sfx;
     public AudioSource oneShots;
-    bool randomBeeee; 
+    bool randomBeeee;
     public bool wpierdolB;
     public AudioClip beeee;
-    public GameObject a; 
+    public GameObject a;
 
+ 
 	void Start () {
 
         DontDestroyOnLoad(a);
         randomBeeee = true; 
-        GameToMenu.TransitionTo(0f);
         StartCoroutine("PlayRandomBeee");
 	}
 
     public void TransitionToGame()
     {
-        GameToMenu.TransitionTo(0.5f);
+        MenuToGame.TransitionTo(0.5f);
         randomBeeee = false;
     }
 
@@ -67,7 +67,7 @@ public class AudioSystem : MonoBehaviour {
 
     void Update()
     {
-        if (wpierdol && !oneShots.isPlaying)
-            MenuToGame.TransitionTo(1f);
+       // if (wpierdol && !oneShots.isPlaying)
+       //     MenuToGame.TransitionTo(1f);
     }
 }
