@@ -70,7 +70,7 @@ public class StorageArea : MonoBehaviour, IStorageArea {
             }
         }
     }
-    void OnButtonDown()
+    void OnMouseDown()
     {
         if (hasItem)
         {
