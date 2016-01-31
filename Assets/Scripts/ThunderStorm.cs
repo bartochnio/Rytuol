@@ -14,13 +14,16 @@ public class ThunderStorm : MonoBehaviour, IThunderStorm {
 	public GameObject villageSavagesContainer;
 	public GameObject villageFruitsContainer;
 	public GameObject villageAnimalsContainer;
-
+    AudioSource sfx;
+    public AudioClip[] thunderSFX;
 
 // MonoBehaviour
 //
     void OnEnable()
     {
         Messenger.AddListener("thunder", FireThunder);
+        if (sfx == null)
+            sfx = GameObject.Find("Audio/AudioSFX").GetComponent<AudioSource>();
     }
 
     void OnDisable()
@@ -31,6 +34,7 @@ public class ThunderStorm : MonoBehaviour, IThunderStorm {
     void FireThunder()
     {
         KillPeons(1);
+        sfx.PlayOneShot(thunderSFX[Random.Range(0,thunderSFX.Length)]);
     }
 
 	void Awake() {

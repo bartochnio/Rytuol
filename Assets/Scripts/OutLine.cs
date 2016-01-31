@@ -31,6 +31,7 @@ public class OutLine : MonoBehaviour {
     {
         rend.material.color = outlineColor;
         Vector3 scale = srcRend.transform.localScale;
+        rend.sprite = srcRend.sprite;
         rend.transform.localScale = scale * outlineScale;
         outRend.sortingOrder = srcRend.sortingOrder - 1;
     }
