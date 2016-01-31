@@ -15,6 +15,8 @@ public class Forest : MonoBehaviour, IForest {
 	public GameObject animalPrefab;
 
 	public float spawnDelay = 1.0f;
+	public int savagesTargetPopulation = 20;
+	public int animalTargetPopulation = 20;
 
 	public GameObject[] forestArea;	
 	public GameObject itemsArea;
@@ -27,6 +29,8 @@ public class Forest : MonoBehaviour, IForest {
 	public List<IForestItem> animals = new List<IForestItem> ();
 
 	float spawnWaitTime = 0.0f;
+	int nSavages = 0;
+	int nAnimals = 0;
 
 
 // MonoBehaviour
@@ -43,27 +47,21 @@ public class Forest : MonoBehaviour, IForest {
 			int chance = Random.Range (0, 1000) % 4;
 			switch (chance) {
 			case 0: {
-					if (savages.Count < 10) {
+					if (nSavages < savagesTargetPopulation) {
+						++nSavages;
+
 						GameObject GO = GameObject.Instantiate (savagePrefab, AnyLocation, Quaternion.identity) as GameObject;
 						GO.transform.parent = itemsArea.transform;//Forest.GetGlobalInstance ().transform;
-
-						IForestItem item = (IForestItem)GO.GetComponent<ForestItem>();
-						if (item != null) {
-							savages.Add (item);
-						}
 					}
 				}
 				break;
 
 			case 1: {
-					if (animals.Count < 10) {
+					if (nAnimals < animalTargetPopulation) {
+						++nAnimals;
+
 						GameObject GO = GameObject.Instantiate (animalPrefab, AnyLocation, Quaternion.identity) as GameObject;
 						GO.transform.parent = itemsArea.transform; //Forest.GetGlobalInstance ().transform;
-
-						IForestItem item = (IForestItem)GO.GetComponent<ForestItem>();
-						if (item != null) {
-							animals.Add (item);
-						}
 					}
 				}
 				break;
@@ -75,38 +73,6 @@ public class Forest : MonoBehaviour, IForest {
 
 // IForest
 //
-	public IForestItem FindItem (ForestItemEnum itmType) {
-		IForestItem returnItem = null;
-
-		switch (itmType) {
-		case ForestItemEnum.eSavage:
-			if (savages.Count > 0) {
-				int lastItemIndex = savages.Count - 1;
-				returnItem = savages [lastItemIndex];
-				savages.RemoveAt (lastItemIndex);
-			}
-			break;
-
-		case ForestItemEnum.eFruit:
-			if (savages.Count > 0) {
-				int lastItemIndex = savages.Count - 1;
-				returnItem = fruits [lastItemIndex];
-				fruits.RemoveAt (lastItemIndex);
-			}
-			break;
-
-		case ForestItemEnum.eAnimal:
-			if (savages.Count > 0) {
-				int lastItemIndex = savages.Count - 1;
-				returnItem = animals [lastItemIndex];
-				animals.RemoveAt (lastItemIndex);
-			}
-			break;
-		}
-
-		return returnItem;
-	}
-
 	public Vector3 AnyLocation {
 		get {
 			var renderer = forestArea[0].GetComponentInChildren<BoxCollider2D> ();
