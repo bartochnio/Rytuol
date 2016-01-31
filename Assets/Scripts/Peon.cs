@@ -233,6 +233,11 @@ public class Peon : MonoBehaviour, IMovable, IPeon
             {
                 this.StoreForestItem(forestItem);
                 forestItem.Unselect();
+
+				var tree = forestItem as ForestItem;
+				if (tree != null) {
+					tree.ApplePicked ();
+				}
             } 
             else
             {
@@ -367,14 +372,25 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 
 	public bool IsSafeToKill {
 		get {
-			return (actionState == State.eMovingToPeonsArea)
+			/*return (actionState == State.eMovingToPeonsArea)
 				|| (actionState == State.eStoringItem)
 				|| (actionState == State.eQueueingItem)
-				|| (actionState == State.eOfferingItem);
+				|| (actionState == State.eOfferingItem);*/
+			return true;
 		}
 	}
 
 	public void Kill() {
+		if (mTarget != null) {
+			var fi = mTarget.GetComponent<IForestItem> ();
+			if (fi != null) {
+				fi.Unselect ();
+			}
+			else {
+				var vi = mTarget.GetComponent<IVillageItem> ();
+				vi.Unselect ();
+			}
+		}
 		GameObject.Destroy (gameObject);
 	}
 }
