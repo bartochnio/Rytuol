@@ -46,6 +46,8 @@ public class Critter : MonoBehaviour, IMovable, IForestItem
         Village.GetGlobalInstance().OrderCaptureItem(this);
     }
 
+    public void ApplePicked() { }
+
     // IForestItem
     public ForestItemEnum ItemType
     {

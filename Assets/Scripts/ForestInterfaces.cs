@@ -18,6 +18,8 @@ public interface IForestItem {
 
 	bool IsSafeToKill { get; }
 	void Kill();
+
+    void ApplePicked();
 }
 
 

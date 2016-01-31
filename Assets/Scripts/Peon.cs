@@ -302,6 +302,7 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 		case ForestItemEnum.eFruit:
 			MoveToPoint(Village.GetGlobalInstance().FruitsArea.AnyLocation);
 			Payload.ShowPayload(VillageItemEnum.eFruit);
+            item.ApplePicked();
 			break;
 
 		case ForestItemEnum.eAnimal:

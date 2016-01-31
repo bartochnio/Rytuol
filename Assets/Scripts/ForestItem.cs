@@ -10,6 +10,7 @@ public class ForestItem : MonoBehaviour, IForestItem {
 	bool bSelected;
 	bool bAppleExists = false;
 
+    Apple apple;
 
 // MonoBehaviour
 //
@@ -24,12 +25,18 @@ public class ForestItem : MonoBehaviour, IForestItem {
 
 // public functions
 //
+
+    //called from animation
 	public void AppleSpawned() {
 		bAppleExists = true;
 	}
 
-	public void ApplePicked() {
-		bAppleExists = false;
+	public void ApplePicked()
+    {
+        apple = GetComponentInChildren<Apple>();
+        Animator animator = apple.GetComponent<Animator>();
+        bAppleExists = false;
+        animator.Play("apple_in");
 	}
 
 
@@ -79,4 +86,14 @@ public class ForestItem : MonoBehaviour, IForestItem {
 	public void Kill() {
 		GameObject.Destroy (gameObject);
 	}
+
+    public void Start()
+    {
+
+    }
+
+    public void Update()
+    {
+
+    }
 }

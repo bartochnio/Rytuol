@@ -145,8 +145,8 @@ public class NavMesh2D : MonoBehaviour
 
 	void Start () 
     {
-        if (!generateOnUpdate)
-            Generate();
+        //if (!generateOnUpdate)
+        //    Generate();
 	}
 
 	void Update ()
