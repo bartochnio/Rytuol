@@ -13,4 +13,9 @@ public class Smoke : MonoBehaviour {
 
     }
 
+
+    public void DestroyMe()
+    {
+        Destroy(this.gameObject);
+    }
 }
