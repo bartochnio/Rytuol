@@ -490,7 +490,7 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 
 	public bool IsSafeToKill()
     {
-	    return actionState == State.eIdle || mQueueSlot == -1;	
+	    return actionState == State.eIdle && mQueueSlot == -1;	
 	}
 
 	public void Kill() {
