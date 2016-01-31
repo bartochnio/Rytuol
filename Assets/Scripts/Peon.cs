@@ -28,6 +28,7 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 	ForestItemEnum payLoadForestItem;
 	VillageItemEnum payLoadVillageItem;
 	Temple targetTemple;
+    Animator anim; 
 
     enum State
     {
@@ -63,7 +64,8 @@ public class Peon : MonoBehaviour, IMovable, IPeon
     // Use this for initialization
     void Start ()
     {
-
+        if (anim == null)
+            anim = GetComponent<Animator>();
     }
 	
 	// Update is called once per frame
@@ -114,6 +116,7 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 
 	void OnIdle()
 	{
+        anim.SetTrigger("IDLE");
 	}
 
 	void OnPursue()
@@ -217,6 +220,16 @@ public class Peon : MonoBehaviour, IMovable, IPeon
 
         //movement
         transform.position += velocity * Time.deltaTime;
+
+        if (velocity.x > 0 && velocity.y > 0)
+            anim.SetTrigger("UR");
+        if (velocity.x < 0 && velocity.y > 0)
+            anim.SetTrigger("UL");
+        if (velocity.x < 0 && velocity.y < 0)
+            anim.SetTrigger("DL");
+        if (velocity.x > 0 && velocity.y < 0)
+            anim.SetTrigger("DR");
+      
     }
 
     void OnTriggerEnter2D(Collider2D other)
